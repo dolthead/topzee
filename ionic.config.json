@@ -1,0 +1,7 @@
+{
+  "name": "topzee",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
