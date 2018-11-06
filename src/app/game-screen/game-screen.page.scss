@@ -1,0 +1,7 @@
+ion-row, ion-col {
+    white-space: nowrap;
+}
+ion-col ion-col,
+ion-row ion-row {
+    padding: 0;
+}
