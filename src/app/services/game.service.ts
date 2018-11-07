@@ -57,7 +57,10 @@ export class GameService implements OnInit {
 
     public resetGame() {
         this.game = { ...newGame };
-        this.game.dice.forEach((die) => die.pips = 0 && (die.locked = false));
+        this.game.dice.forEach((die) => {
+            die.pips = 0;
+            die.locked = false;
+        });
         this.game.categories.forEach((cat) => cat.score = undefined);
         return this.nativeStorage.setItem(GAME_DATA, this.game);
     }
@@ -82,7 +85,12 @@ export class GameService implements OnInit {
             case '4 Oak':
                 return this.getOAKScore(4);
             case '2+3 Oak':
-                return this.game.dice.filter(die => die.pips === 3).length * 3;
+                const value = 25;
+                if (this.getOAKScore(5) > 0) return value;
+                if (this.getOAKScore(3) === 0) return 0;
+                const mode = this.getMode(this.game.dice);
+                const remain = this.game.dice.filter(die => die.pips !== mode);
+                return remain.length === 2 && remain[0].pips === remain[1].pips ? value : 0;
             case '4 Str':
                 return this.game.dice.filter(die => die.pips === 4).length * 4;
             case '5 Str':
@@ -115,18 +123,30 @@ export class GameService implements OnInit {
         this.game.turnsLeft--;
     }
 
+    public clearSelectedCategory() {
+        if (this.game.category) {
+            this.setCatScore(this.game.category, undefined);
+            this.game.category = undefined;
+        }
+    }
+
     public setSelectedCategory(catName) {
-        if (catName !== 'Bonus') {
-            if (this.game.category) {
-                this.game.categories.find(c => c.name === this.game.category).score = undefined;
-            }
-            if (this.game.rollsLeft < 3) {
+        if (catName !== 'Bonus' && catName !== this.game.category) {
+            const cat = this.getCat(catName);
+            this.clearSelectedCategory();
+            if (cat.score === undefined) {
                 this.game.category = catName;
-                if (catName) {
-                    this.game.categories.find(c => c.name === catName).score = this.getScore(catName);
-                }
+                this.setCatScore(catName, this.getScore(catName));
             }
         }
+    }
+
+    setCatScore(catName, score) {
+        this.game.categories.find(c => c.name === catName).score = score;
+    }
+
+    getCat(catName) {
+        return catName ? this.game.categories.find(c => c.name === catName) : catName;
     }
 
     getOAKScore(howManyOAK) {

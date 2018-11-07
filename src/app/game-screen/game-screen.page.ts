@@ -20,11 +20,15 @@ export class GameScreenPage {
 
     roll() {
         if (this.gameService.game.rollsLeft) {
-            this.setSelectedCategory(undefined);
+            this.clearSelectedCategory();
             this.gameService.game.dice.filter(die => !die.locked)
                 .forEach(die => die.pips = Math.ceil(Math.random() * 6 ));
             this.gameService.game.rollsLeft--;
         }
+    }
+
+    clearSelectedCategory() {
+        this.gameService.clearSelectedCategory();
     }
 
     setSelectedCategory(catName) {

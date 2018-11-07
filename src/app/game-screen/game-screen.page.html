@@ -14,7 +14,7 @@
             <ion-col>
                 <ion-row *ngFor="let cat of gameService.game.categories.slice(0, 7)"
                         (click)="setSelectedCategory(cat.name)">
-                    <ion-col>{{ cat.name }}</ion-col>
+                    <ion-col><span [ngClass]="{'disabled': cat.name === 'Bonus'}">{{ cat.name }}</span></ion-col>
                     <ion-col text-end>{{ cat.score }}</ion-col>
                 </ion-row>
             </ion-col>
@@ -30,17 +30,17 @@
 
     <ion-grid>
         <ion-row>
-            <ion-col>Subtotal</ion-col>
+            <ion-col><span class="disabled">Subtotal</span></ion-col>
             <ion-col text-end>{{ gameService.game.subtotalLeft }}</ion-col>
-            <ion-col>Subtotal</ion-col>
+            <ion-col><span class="disabled">Subtotal</span></ion-col>
             <ion-col text-end>{{ gameService.game.subtotalRight }}</ion-col>
         </ion-row>
         <ion-row>
-            <ion-col>TOTAL</ion-col>
+            <ion-col><span class="disabled">TOTAL</span></ion-col>
             <ion-col text-end>{{ gameService.game.total }}</ion-col>
             <ion-col></ion-col>
             <ion-col text-end>
-                <ion-button [disabled]="!gameService.game.category && gameService.game.rollsLeft === 3" (click)="save()">Save</ion-button>
+                <ion-button [disabled]="!gameService.game.category || gameService.game.rollsLeft === 3" (click)="save()">Save</ion-button>
             </ion-col>
         </ion-row>
     </ion-grid>
@@ -48,11 +48,10 @@
     <ion-grid>
         <ion-row id="dice-row">
             <ion-col *ngFor="let die of gameService.game.dice; index as i">
-                <ion-button (click)="gameService.game.dice[i].locked=!gameService.game.dice[i].locked"
-                            [color]="gameService.game.dice[i].locked ? 'secondary' : 'primary'">
-                    <h1>{{ die.pips ? die.pips : '' }}</h1>
-                    <!--<ion-icon src="/assets/svg/die-{{die}}.svg"></ion-icon>-->
-                </ion-button>
+                <div class="die" (click)="gameService.game.dice[i].locked = !gameService.game.dice[i].locked"
+                            [ngClass]="{ 'locked': gameService.game.dice[i].locked }">
+                    <div class="pips">{{ die.pips ? die.pips : '' }}</div>
+                </div>
             </ion-col>
         </ion-row>
     </ion-grid>
@@ -61,7 +60,7 @@
         <ion-row>
             <ion-col>Rolls left: {{ gameService.game.rollsLeft }}</ion-col>
             <ion-col>
-                <ion-button expand="block" [disabled]="!gameService.game.rollsLeft || !unlockedCount() "
+                <ion-button expand="block" [disabled]="!gameService.game.rollsLeft || !gameService.game.turnsLeft || !unlockedCount() "
                             (click)="roll()">Roll {{ unlockedCount() }} {{ unlockedCount() > 1 ? 'dice' : 'die' }}</ion-button>
             </ion-col>
         </ion-row>
