@@ -1,46 +1,53 @@
 <ion-header>
-  <ion-toolbar color="secondary">
-    <ion-title align-items-center>
-      <ion-icon src="/assets/svg/dice.svg" size="large"></ion-icon>
-      <span margin-start>Topzee</span>
-    </ion-title>
-  </ion-toolbar>
+    <ion-toolbar color="primary">
+        <ion-title>
+            <!--<ion-icon src="/assets/svg/dice.svg" size="large"></ion-icon>-->
+            <span>Topzee</span>
+        </ion-title>
+    </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
 
-  <ion-grid>
-    <ion-row>
-      <ion-col>Games played</ion-col>
-      <ion-col>{{ lifetimeStats.completedGameCount }}</ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>Average Score</ion-col>
-      <ion-col>{{ averageScore | number:'1.1' }}</ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>High Score</ion-col>
-      <ion-col>{{ lifetimeStats.highScore }}</ion-col>
-    </ion-row>
-  </ion-grid>
+    <ion-card>
+        <ion-card-content>
+            <ion-grid>
+                <ion-row>
+                    <ion-col>Games played</ion-col>
+                    <ion-col text-end>{{ lifetimeStats.completedGameCount }}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col>Average Score</ion-col>
+                    <ion-col text-end>{{ averageScore | number:'1.1' }}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col>High Score</ion-col>
+                    <ion-col text-end>{{ lifetimeStats.highScore }}</ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-card-content>
+    </ion-card>
 
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button *ngIf="!gameService.game.playing" (click)="playGame()">
-        <ion-icon slot="start" name="add" color="success"></ion-icon>
-        Start Game
-      </ion-button>
-      <ion-button *ngIf="gameService.game.playing" (click)="playGame()">
-        <ion-icon slot="start" name="pause" color="success"></ion-icon>
-        Resume Game ({{ gameService.game.turnsLeft }} turns left)
-      </ion-button>
-    </ion-buttons>
-    <!--<ion-buttons slot="end">-->
-      <!--<ion-button color="secondary">-->
+    <!--<ion-toolbar>-->
+        <!--<ion-buttons slot="start">-->
+            <ion-button *ngIf="!gameService.game.playing" (click)="playGame()">
+                <ion-icon slot="start" name="add" color="success"></ion-icon>
+                Start Game
+            </ion-button>
+            <ion-button expand="block" *ngIf="gameService.game.playing" (click)="playGame()">
+                <ion-icon slot="start" name="pause" color="success"></ion-icon>
+                Resume Game ({{ gameService.game.turnsLeft }} turns left)
+            </ion-button>
+            <ion-button expand="block" *ngIf="gameService.game.playing" (click)="restartGame()" color="danger" fill="outline">
+                Restart Game
+            </ion-button>
+        <!--</ion-buttons>-->
+        <!--<ion-buttons slot="end">-->
+        <!--<ion-button color="secondary">-->
         <!--<ion-icon slot="icon-only" name="more"></ion-icon>-->
-      <!--</ion-button>-->
-    <!--</ion-buttons>-->
-  </ion-toolbar>
+        <!--</ion-button>-->
+        <!--</ion-buttons>-->
+    <!--</ion-toolbar>-->
 
 
 </ion-content>

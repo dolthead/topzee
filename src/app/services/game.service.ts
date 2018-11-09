@@ -37,7 +37,7 @@ const newGame: any = {
 };
 const GAME_DATA = 'GAME_DATA';
 const MIN_FOR_BONUS = 63;
-const BONUS = 37;
+const BONUS = 50;
 
 @Injectable({
     providedIn: 'root'
@@ -85,16 +85,11 @@ export class GameService implements OnInit {
             case '4 Oak':
                 return this.getOAKScore(4);
             case '2+3 Oak':
-                const value = 25;
-                if (this.getOAKScore(5) > 0) return value;
-                if (this.getOAKScore(3) === 0) return 0;
-                const mode = this.getMode(this.game.dice);
-                const remain = this.game.dice.filter(die => die.pips !== mode);
-                return remain.length === 2 && remain[0].pips === remain[1].pips ? value : 0;
+                return this.get23OAKScore();
             case '4 Str':
-                return this.game.dice.filter(die => die.pips === 4).length * 4;
+                return this.get4StraightScore();
             case '5 Str':
-                return this.game.dice.filter(die => die.pips === 5).length * 5;
+                return this.get5StraightScore();
             case '5 Oak':
                 return this.getOAKScore(5) > 0 ? 50 : 0;
             case 'Any':
@@ -131,7 +126,9 @@ export class GameService implements OnInit {
     }
 
     public setSelectedCategory(catName) {
-        if (catName !== 'Bonus' && catName !== this.game.category) {
+        if (catName !== 'Bonus'
+                && catName !== this.game.category
+                && this.game.dice[0].pips > 0) {
             const cat = this.getCat(catName);
             this.clearSelectedCategory();
             if (cat.score === undefined) {
@@ -152,6 +149,50 @@ export class GameService implements OnInit {
     getOAKScore(howManyOAK) {
         const mode = this.getMode(this.game.dice);
         return (this.getPipsCount(mode) >= howManyOAK ? this.getDiceTotal() : 0);
+    }
+
+    get23OAKScore() {
+        const value = 25;
+        if (this.getOAKScore(5) > 0) { return value; }
+        if (this.getOAKScore(3) === 0) { return 0; }
+        const mode = this.getMode(this.game.dice);
+        const notMode = this.game.dice.filter(die => die.pips !== mode);
+        return notMode.length === 2 && notMode[0].pips === notMode[1].pips ? value : 0;
+    }
+
+    get4StraightScore() {
+        let value = 30;
+        let sorted = this.game.dice.concat().sort((a, b) => a.pips - b.pips);
+        sorted = sorted.reduce((accumulator, current) => {
+            const length = accumulator.length;
+            if (length === 0 || accumulator[length - 1].pips !== current.pips) {
+                accumulator.push(current);
+            }
+            return accumulator;
+        }, []);
+        if (sorted.length < 4) { // four unique numbers is required
+            return 0;
+        } else if (sorted.length === 5) {
+            if (sorted[0].pips + 1 !== sorted[1].pips) { // if gap is at start, remove first item (1, 3, 4, 5, 6)
+                sorted.shift();
+            } else {
+                sorted.pop();
+            }
+        }
+        sorted.forEach((die, d, thisArray) => { // see if first 3 have their successor successing
+            if (d < 3 && ((die.pips + 1) !== thisArray[d + 1].pips)) { value = 0; }
+        });
+        return value;
+    }
+
+    get5StraightScore() {
+        const value = 40;
+        const sorted = this.game.dice.concat().sort((a, b) => a.pips - b.pips);
+        return sorted[0].pips + 1 === sorted[1].pips
+                && sorted[1].pips + 1 === sorted[2].pips
+                && sorted[2].pips + 1 === sorted[3].pips
+                && sorted[3].pips + 1 === sorted[4].pips
+            ? value : 0;
     }
 
     getMode(myArray) {

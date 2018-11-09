@@ -1,13 +1,53 @@
+ion-content {
+    background-color: lightskyblue;
+}
+
+ion-card {
+    margin: 6px;
+}
+
+ion-card-content {
+    padding: 6px;
+}
+
 ion-row, ion-col {
     white-space: nowrap;
 }
+
 ion-col ion-col,
 ion-row ion-row {
     padding: 0;
 }
+
+.scoreboard ion-col {
+    margin: auto 0;
+}
+
+.scoreboard ion-col + ion-col {
+    margin-left: 20px;
+}
+
+ion-row + ion-row {
+    margin-top: 6px;
+}
+
+.scoreboard ion-col ion-row:not(.disabled) ion-col:nth-child(2) {
+    height: 1.6em;
+    margin: auto 0;
+    padding: 3px 8px;
+    max-width: 40px;
+    font-size: 1.1em;
+    color: black;
+
+    &.unscored {
+        border-radius: 10px;
+        background-color: lightblue;
+    }
+}
+
 .die {
-    height: 15vw;
-    width: 15vw;
+    height: 12vw;
+    width: 12vw;
     border-radius: 20%;
     color: #666;
     border: 1px #ddd solid;
@@ -16,12 +56,14 @@ ion-row ion-row {
     justify-content: center;
     align-content: center;
     .pips {
-        font-size: 2em;
+        font-size: 1.7em;
     }
 }
+
 .die.locked {
     background-color: #eee;
 }
+
 .disabled {
     color: #999;
 }
