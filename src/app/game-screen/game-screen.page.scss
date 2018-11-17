@@ -3,7 +3,7 @@ ion-content {
 }
 
 ion-card {
-    margin: 6px;
+    margin: 10px;
 }
 
 ion-card-content {
@@ -48,6 +48,8 @@ ion-row + ion-row {
 .die {
     height: 12vw;
     width: 12vw;
+    max-height: 64px;
+    max-width: 64px;
     border-radius: 20%;
     color: #666;
     border: 1px #ddd solid;

@@ -44,15 +44,15 @@ const BONUS = 50;
 })
 export class GameService implements OnInit {
 
-    public game: any = { ...newGame };
+    public game: any;
 
     constructor(private nativeStorage: NativeStorage) {
     }
 
     ngOnInit() {
         this.nativeStorage.getItem(GAME_DATA)
-            .then(data => console.log('storage', data) && (this.game = data ? data : { ...newGame }),
-                error => console.log('storage error', error) && (this.game = { ...newGame }));
+            .then(data => this.game = data,
+                error => console.log('storage error', error));
     }
 
     public resetGame() {

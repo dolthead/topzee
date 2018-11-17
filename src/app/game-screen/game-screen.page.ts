@@ -8,14 +8,14 @@ import {GameService} from '../services/game.service';
 })
 export class GameScreenPage {
 
+    unlockedCount: number = 5;
+    rollLabel: String;
+
     constructor(public gameService: GameService) {
     }
 
     ionViewWillEnter() {
-    }
-
-    unlockedCount() {
-        return this.gameService.game.dice.filter((d) => !d.locked).length;
+        this.setRollLabel();
     }
 
     roll() {
@@ -24,7 +24,17 @@ export class GameScreenPage {
             this.gameService.game.dice.filter(die => !die.locked)
                 .forEach(die => die.pips = Math.ceil(Math.random() * 6 ));
             this.gameService.game.rollsLeft--;
+            this.setRollLabel();
         }
+    }
+
+    setRollLabel() {
+        this.unlockedCount = this.gameService.game.dice.filter((d) => !d.locked).length;
+        this.rollLabel = !this.gameService.game.turnsLeft
+                ? `Game over`
+                : this.gameService.game.rollsLeft
+                ? `Roll ${ this.unlockedCount } ${ this.unlockedCount > 1 ? 'dice' : 'die' }`
+                : `No rolls left`;
     }
 
     clearSelectedCategory() {
@@ -37,10 +47,12 @@ export class GameScreenPage {
 
     save() {
         this.gameService.save();
+        this.setRollLabel();
     }
 
     reset() {
         this.gameService.resetGame();
+        this.setRollLabel();
     }
 
 }

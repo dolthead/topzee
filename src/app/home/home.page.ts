@@ -14,7 +14,6 @@ export class HomePage {
         highScore: 0,
         totalScore: 0
     };
-    // game: any = undefined;
     averageScore = 0.0;
 
     constructor(private router: Router, public gameService: GameService) {
@@ -26,9 +25,17 @@ export class HomePage {
             : 0.0;
     }
 
+    restartGame() {
+        this.gameService.resetGame()
+            .then(() => this.router.navigateByUrl('/GameScreen'),
+                () => this.router.navigateByUrl('/GameScreen'));
+    }
+
     playGame() {
         if (!this.gameService.game) {
-            this.gameService.resetGame().then(() => this.router.navigateByUrl('/GameScreen'));
+            this.gameService.resetGame()
+                .then(() => this.router.navigateByUrl('/GameScreen'),
+                    () => this.router.navigateByUrl('/GameScreen'));
         } else {
             this.router.navigateByUrl('/GameScreen');
         }
