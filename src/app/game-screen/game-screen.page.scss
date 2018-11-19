@@ -31,17 +31,25 @@ ion-row + ion-row {
     margin-top: 6px;
 }
 
-.scoreboard ion-col ion-row:not(.disabled) ion-col:nth-child(2) {
-    height: 1.6em;
-    margin: auto 0;
-    padding: 3px 8px;
-    max-width: 40px;
-    font-size: 1.1em;
-    color: black;
+.scoreboard ion-col ion-row:not(.disabled) {
+    ion-col {
+        min-height: 1.6em;
+        height: 4vh;
+        margin: auto 0;
+    }
+    ion-col:nth-child(1) {
+        color: black;
+    }
+    ion-col:nth-child(2) {
+        padding: 3px 8px;
+        max-width: 40px;
+        font-size: 1.1em;
+        color: black;
 
-    &.unscored {
-        border-radius: 10px;
-        background-color: lightblue;
+        &.unscored {
+            border-radius: 10px;
+            background-color: lightblue;
+        }
     }
 }
 
@@ -58,12 +66,13 @@ ion-row + ion-row {
     justify-content: center;
     align-content: center;
     .pips {
+        margin: auto 0;
+        color: black;
         font-size: 1.7em;
     }
-}
-
-.die.locked {
-    background-color: #eee;
+    &.locked {
+        background-color: #eee;
+    }
 }
 
 .disabled {

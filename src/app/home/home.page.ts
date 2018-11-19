@@ -9,20 +9,9 @@ import {GameService} from '../services/game.service';
 })
 export class HomePage {
 
-    lifetimeStats = {
-        completedGameCount: 0,
-        highScore: 0,
-        totalScore: 0
-    };
     averageScore = 0.0;
 
     constructor(private router: Router, public gameService: GameService) {
-    }
-
-    ionViewWillEnter() {
-        this.averageScore = this.lifetimeStats.completedGameCount > 0 ?
-            this.lifetimeStats.totalScore * 1.0 / this.lifetimeStats.completedGameCount
-            : 0.0;
     }
 
     restartGame() {

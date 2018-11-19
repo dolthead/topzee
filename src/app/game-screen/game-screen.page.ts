@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {GameService} from '../services/game.service';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-game-screen',
@@ -11,7 +12,7 @@ export class GameScreenPage {
     unlockedCount: number = 5;
     rollLabel: String;
 
-    constructor(public gameService: GameService) {
+    constructor(private router: Router, public gameService: GameService) {
     }
 
     ionViewWillEnter() {
@@ -26,6 +27,11 @@ export class GameScreenPage {
             this.gameService.game.rollsLeft--;
             this.setRollLabel();
         }
+    }
+
+    dieClick(i) {
+        this.gameService.game.dice[i].locked = !this.gameService.game.dice[i].locked;
+        this.setRollLabel();
     }
 
     setRollLabel() {
@@ -45,9 +51,13 @@ export class GameScreenPage {
         this.gameService.setSelectedCategory(catName);
     }
 
-    save() {
-        this.gameService.save();
-        this.setRollLabel();
+    async save() {
+        await this.gameService.save();
+        if (this.gameService.game) {
+            this.setRollLabel();
+        } else {
+            this.router.navigateByUrl('/home');
+        }
     }
 
     reset() {

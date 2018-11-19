@@ -52,24 +52,23 @@
     <ion-grid>
         <ion-row id="dice-row" margin-start margin-end padding-start padding-end>
             <ion-col *ngFor="let die of gameService.game.dice; index as i">
-                <div class="die" (click)="gameService.game.dice[i].locked = !gameService.game.dice[i].locked"
-                            [ngClass]="{ 'locked': gameService.game.dice[i].locked }">
-                    <div class="pips">{{ die.pips ? die.pips : '' }}</div>
+                <div class="die" (click)="dieClick(i)" [ngClass]="{ 'locked': gameService.game.dice[i].locked }">
+                    <span class="pips">{{ die.pips ? die.pips : '' }}</span>
                 </div>
             </ion-col>
         </ion-row>
     </ion-grid>
 
     <ion-grid>
-        <ion-row margin-start margin-end padding-start padding-end>
-            <ion-col>Rolls left: {{ gameService.game.rollsLeft }}</ion-col>
+        <ion-row margin-start margin-end>
+            <ion-col align-self-center>
+                <span>Rolls left: {{ gameService.game.rollsLeft }}</span>
+            </ion-col>
             <ion-col text-end>
                 <ion-button [disabled]="!gameService.game.rollsLeft || !gameService.game.turnsLeft || !this.unlockedCount"
                             (click)="roll()">{{ rollLabel }}</ion-button>
             </ion-col>
         </ion-row>
     </ion-grid>
-
-    <ion-button expand="block" fill="outline" (click)="reset()">Reset</ion-button>
 
 </ion-content>

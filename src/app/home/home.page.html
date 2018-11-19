@@ -12,17 +12,21 @@
     <ion-card>
         <ion-card-content>
             <ion-grid>
+                <ion-row *ngIf="gameService.lifetimeStats.lastGame">
+                    <ion-col>Last game</ion-col>
+                    <ion-col text-end>{{ gameService.lifetimeStats.lastGame }}</ion-col>
+                </ion-row>
                 <ion-row>
                     <ion-col>Games played</ion-col>
-                    <ion-col text-end>{{ lifetimeStats.completedGameCount }}</ion-col>
+                    <ion-col text-end>{{ gameService.lifetimeStats.completedGameCount }}</ion-col>
                 </ion-row>
                 <ion-row>
                     <ion-col>Average Score</ion-col>
-                    <ion-col text-end>{{ averageScore | number:'1.1' }}</ion-col>
+                    <ion-col text-end>{{ gameService.lifetimeStats.averageScore | number:'1.1' }}</ion-col>
                 </ion-row>
                 <ion-row>
                     <ion-col>High Score</ion-col>
-                    <ion-col text-end>{{ lifetimeStats.highScore }}</ion-col>
+                    <ion-col text-end>{{ gameService.lifetimeStats.highScore }}</ion-col>
                 </ion-row>
             </ion-grid>
         </ion-card-content>

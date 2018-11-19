@@ -45,6 +45,13 @@ const BONUS = 50;
 export class GameService implements OnInit {
 
     public game: any;
+    public lifetimeStats: any = {
+        lastGame: undefined,
+        completedGameCount: 0,
+        highScore: 0,
+        totalScore: 0,
+        averageScore: 0.0
+    };
 
     constructor(private nativeStorage: NativeStorage) {
     }
@@ -63,6 +70,10 @@ export class GameService implements OnInit {
         });
         this.game.categories.forEach((cat) => cat.score = undefined);
         return this.nativeStorage.setItem(GAME_DATA, this.game);
+    }
+
+    public clearGame() {
+        this.game = undefined;
     }
 
     public getScore (catName) {
@@ -100,7 +111,7 @@ export class GameService implements OnInit {
         }
     }
 
-    public save() {
+    public async save() {
         this.game.category = undefined;
         this.game.subtotalLeft = this.game.categories.slice(0, 6)
             .reduce((total, cat) => total + (cat.score || 0), 0);
@@ -116,6 +127,10 @@ export class GameService implements OnInit {
         this.game.rollsLeft = 3;
         this.game.dice = newDice();
         this.game.turnsLeft--;
+        if (!this.game.turnsLeft) {
+            this.gameOver();
+        }
+        await this.storeGame();
     }
 
     public clearSelectedCategory() {
@@ -136,6 +151,22 @@ export class GameService implements OnInit {
                 this.setCatScore(catName, this.getScore(catName));
             }
         }
+    }
+
+    gameOver() {
+        this.lifetimeStats.lastGame = this.game.total;
+        if (this.game.total > this.lifetimeStats.highScore) {
+            this.lifetimeStats.highScore = this.game.total;
+        }
+        this.lifetimeStats.completedGameCount++;
+        this.lifetimeStats.averageScore = this.lifetimeStats.completedGameCount > 0 ?
+            this.lifetimeStats.totalScore * 1.0 / this.lifetimeStats.completedGameCount
+            : 0.0;
+        this.clearGame();
+    }
+
+    async storeGame() {
+        await console.log('stored');
     }
 
     setCatScore(catName, score) {
