@@ -10,15 +10,16 @@ import {AlertController} from '@ionic/angular';
 })
 export class GameScreenPage {
 
-    unlockedCount: number = 5;
+    unlockedCount = 5;
     rollLabel: String;
 
     constructor(private router: Router, public gameService: GameService,
                 public alertController: AlertController) {
     }
 
-    ionViewDidEnter() {
-        this.setRollLabel();
+    ionViewWillEnter() {
+        // console.log('will enter');
+        setTimeout(() => this.setRollLabel(), 100);
     }
 
     async roll() {
@@ -44,8 +45,8 @@ export class GameScreenPage {
         this.setRollLabel();
     }
 
-    setRollLabel() {
-        this.unlockedCount = this.gameService.game.dice.filter((d) => !d.locked).length;
+    async setRollLabel() {
+        this.unlockedCount = await this.gameService.game.dice.filter((d) => !d.locked).length;
         this.rollLabel = !this.gameService.game.turnsLeft
                 ? `Game over`
                 : this.gameService.game.rollsLeft
@@ -59,10 +60,10 @@ export class GameScreenPage {
 
     async save() {
         await this.gameService.save();
-        if (this.gameService.game) {
+        if (this.gameService.game && this.gameService.game.turnsLeft) {
             this.setRollLabel();
         } else {
-            this.gameService.gameOver();
+            await this.gameService.gameOver();
             await this.gameOver();
         }
     }
@@ -81,7 +82,20 @@ export class GameScreenPage {
             header: 'Game Completed',
             // subHeader: 'Subtitle',
             message: `You scored ${ this.gameService.lifetimeStats.lastGame }!`,
-            buttons: ['Play Again', 'Show Stats', 'Close']
+            buttons: [
+                    {
+                        text: 'Play Again',
+                        handler: () => this.reset()
+                    },
+                    {
+                        text: 'Show Stats',
+                        handler: () => this.goHome()
+                    },
+                    {
+                        text: 'View Game Board',
+                        role: 'cancel'
+                    }
+                ]
         });
 
         await alert.present();

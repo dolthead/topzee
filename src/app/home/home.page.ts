@@ -21,7 +21,7 @@ export class HomePage {
     }
 
     playGame() {
-        if (!this.gameService.game) {
+        if (!this.gameService.game || !this.gameService.game.turnsLeft) {
             this.gameService.resetGame()
                 .then(() => this.router.navigateByUrl('/GameScreen'),
                     () => this.router.navigateByUrl('/GameScreen'));

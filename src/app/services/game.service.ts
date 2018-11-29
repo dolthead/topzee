@@ -59,16 +59,16 @@ export class GameService {
     }
 
     async loadData() {
-        console.log('init', JSON.stringify(this.game));
+        // console.log('init', JSON.stringify(this.game));
         await this.storage.get(GAME_DATA)
             .then(data => this.game = (data ? JSON.parse(data) : undefined),
                 error => console.log('game read error', error));
-        console.log('init', JSON.stringify(this.game));
-        console.log('init', JSON.stringify(this.lifetimeStats));
+        // console.log('init', JSON.stringify(this.game));
+        // console.log('init', JSON.stringify(this.lifetimeStats));
         await this.storage.get(HISTORY_DATA)
             .then(data => this.lifetimeStats = (data ? JSON.parse(data) : this.lifetimeStats),
                 error => console.log('lifetime read error', error));
-        console.log('init', JSON.stringify(this.lifetimeStats));
+        // console.log('init', JSON.stringify(this.lifetimeStats));
     }
 
     public resetGame() {
@@ -180,12 +180,12 @@ export class GameService {
             : 0.0;
         this.game.playing = false;
 
-        await this.storage.set(HISTORY_DATA, JSON.stringify(this.lifetimeStats));
+        return await this.storage.set(HISTORY_DATA, JSON.stringify(this.lifetimeStats));
         // this.clearGame();
     }
 
     async storeGame() {
-        console.log('stored');
+        // console.log('stored');
         return await this.storage.set(GAME_DATA, JSON.stringify(this.game));
     }
 
