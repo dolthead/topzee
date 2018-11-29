@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {GameService} from '../services/game.service';
 import {Router} from '@angular/router';
+import {AlertController} from '@ionic/angular';
 
 @Component({
     selector: 'app-game-screen',
@@ -12,21 +13,30 @@ export class GameScreenPage {
     unlockedCount: number = 5;
     rollLabel: String;
 
-    constructor(private router: Router, public gameService: GameService) {
+    constructor(private router: Router, public gameService: GameService,
+                public alertController: AlertController) {
     }
 
-    ionViewWillEnter() {
+    ionViewDidEnter() {
         this.setRollLabel();
     }
 
-    roll() {
+    async roll() {
+        // this.gameService.game.categories.forEach(cat => cat.name !== 'Any' ? cat.score = 5 : 0);
+        // this.gameService.game.turnsLeft = this.gameService.game.rollsLeft = 1;
+        // await this.gameService.calcTotals();
+        // this.gameService.gameOver();
+        // await this.gameOver();
+        // return;
+
         if (this.gameService.game.rollsLeft) {
-            this.clearSelectedCategory();
+            this.gameService.clearSelectedCategory();
             this.gameService.game.dice.filter(die => !die.locked)
                 .forEach(die => die.pips = Math.ceil(Math.random() * 6 ));
             this.gameService.game.rollsLeft--;
             this.setRollLabel();
         }
+        this.gameService.storeGame();
     }
 
     dieClick(i) {
@@ -43,10 +53,6 @@ export class GameScreenPage {
                 : `No rolls left`;
     }
 
-    clearSelectedCategory() {
-        this.gameService.clearSelectedCategory();
-    }
-
     setSelectedCategory(catName) {
         this.gameService.setSelectedCategory(catName);
     }
@@ -56,13 +62,29 @@ export class GameScreenPage {
         if (this.gameService.game) {
             this.setRollLabel();
         } else {
-            this.router.navigateByUrl('/home');
+            this.gameService.gameOver();
+            await this.gameOver();
         }
     }
 
     reset() {
         this.gameService.resetGame();
         this.setRollLabel();
+    }
+
+    goHome() {
+        this.router.navigateByUrl('/home');
+    }
+
+    async gameOver() {
+        const alert = await this.alertController.create({
+            header: 'Game Completed',
+            // subHeader: 'Subtitle',
+            message: `You scored ${ this.gameService.lifetimeStats.lastGame }!`,
+            buttons: ['Play Again', 'Show Stats', 'Close']
+        });
+
+        await alert.present();
     }
 
 }

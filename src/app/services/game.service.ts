@@ -1,5 +1,5 @@
-import {Injectable, OnInit} from '@angular/core';
-import {NativeStorage} from '@ionic-native/native-storage/ngx';
+import {Injectable} from '@angular/core';
+import {Storage} from '@ionic/storage';
 
 const newDice = () => JSON.parse(JSON.stringify([
     { pips: 0, locked: false },
@@ -36,13 +36,14 @@ const newGame: any = {
     total: 0
 };
 const GAME_DATA = 'GAME_DATA';
+const HISTORY_DATA = 'HISTORY_DATA';
 const MIN_FOR_BONUS = 63;
 const BONUS = 50;
 
 @Injectable({
     providedIn: 'root'
 })
-export class GameService implements OnInit {
+export class GameService {
 
     public game: any;
     public lifetimeStats: any = {
@@ -53,13 +54,21 @@ export class GameService implements OnInit {
         averageScore: 0.0
     };
 
-    constructor(private nativeStorage: NativeStorage) {
+    constructor(public storage: Storage) {
+        this.loadData();
     }
 
-    ngOnInit() {
-        this.nativeStorage.getItem(GAME_DATA)
-            .then(data => this.game = data,
-                error => console.log('storage error', error));
+    async loadData() {
+        console.log('init', JSON.stringify(this.game));
+        await this.storage.get(GAME_DATA)
+            .then(data => this.game = (data ? JSON.parse(data) : undefined),
+                error => console.log('game read error', error));
+        console.log('init', JSON.stringify(this.game));
+        console.log('init', JSON.stringify(this.lifetimeStats));
+        await this.storage.get(HISTORY_DATA)
+            .then(data => this.lifetimeStats = (data ? JSON.parse(data) : this.lifetimeStats),
+                error => console.log('lifetime read error', error));
+        console.log('init', JSON.stringify(this.lifetimeStats));
     }
 
     public resetGame() {
@@ -69,7 +78,7 @@ export class GameService implements OnInit {
             die.locked = false;
         });
         this.game.categories.forEach((cat) => cat.score = undefined);
-        return this.nativeStorage.setItem(GAME_DATA, this.game);
+        return this.storeGame();
     }
 
     public clearGame() {
@@ -113,16 +122,7 @@ export class GameService implements OnInit {
 
     public async save() {
         this.game.category = undefined;
-        this.game.subtotalLeft = this.game.categories.slice(0, 6)
-            .reduce((total, cat) => total + (cat.score || 0), 0);
-        const bonus = this.game.categories.find(cat => cat.name === 'Bonus');
-        if (this.game.subtotalLeft >= MIN_FOR_BONUS) {
-            bonus.score = BONUS;
-            this.game.subtotalLeft += BONUS;
-        }
-        this.game.subtotalRight = this.game.categories.slice(7)
-            .reduce((total, cat) => total + (cat.score || 0), 0);
-        this.game.total = this.game.subtotalLeft + this.game.subtotalRight;
+        await this.calcTotals();
 
         this.game.rollsLeft = 3;
         this.game.dice = newDice();
@@ -131,6 +131,21 @@ export class GameService implements OnInit {
             this.gameOver();
         }
         await this.storeGame();
+    }
+
+    public async calcTotals() {
+        this.game.subtotalLeft = this.game.categories.slice(0, 6)
+            .reduce((total, cat) => total + (cat.score || 0), 0);
+        const bonus = this.game.categories.find(cat => cat.name === 'Bonus');
+        if (this.game.subtotalLeft >= MIN_FOR_BONUS) {
+            bonus.score = BONUS;
+            this.game.subtotalLeft += BONUS;
+        }
+
+        this.game.subtotalRight = this.game.categories.slice(7)
+            .reduce((total, cat) => total + (cat.score || 0), 0);
+
+        this.game.total = this.game.subtotalLeft + this.game.subtotalRight;
     }
 
     public clearSelectedCategory() {
@@ -153,20 +168,25 @@ export class GameService implements OnInit {
         }
     }
 
-    gameOver() {
+    async gameOver() {
         this.lifetimeStats.lastGame = this.game.total;
         if (this.game.total > this.lifetimeStats.highScore) {
             this.lifetimeStats.highScore = this.game.total;
         }
         this.lifetimeStats.completedGameCount++;
+        this.lifetimeStats.totalScore += this.game.total;
         this.lifetimeStats.averageScore = this.lifetimeStats.completedGameCount > 0 ?
-            this.lifetimeStats.totalScore * 1.0 / this.lifetimeStats.completedGameCount
+            this.lifetimeStats.totalScore / this.lifetimeStats.completedGameCount
             : 0.0;
-        this.clearGame();
+        this.game.playing = false;
+
+        await this.storage.set(HISTORY_DATA, JSON.stringify(this.lifetimeStats));
+        // this.clearGame();
     }
 
     async storeGame() {
-        await console.log('stored');
+        console.log('stored');
+        return await this.storage.set(GAME_DATA, JSON.stringify(this.game));
     }
 
     setCatScore(catName, score) {

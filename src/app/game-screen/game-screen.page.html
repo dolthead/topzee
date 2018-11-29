@@ -3,7 +3,7 @@
         <ion-buttons slot="start">
             <ion-back-button defaultHref="home"></ion-back-button>
         </ion-buttons>
-        <ion-title>GameScreen</ion-title>
+        <ion-title>Topzee</ion-title>
     </ion-toolbar>
 </ion-header>
 
@@ -42,7 +42,7 @@
                     <ion-col text-end>{{ gameService.game.total }}</ion-col>
                     <ion-col></ion-col>
                     <ion-col text-end>
-                        <ion-button [disabled]="!gameService.game.category || gameService.game.rollsLeft === 3" (click)="save()">Save</ion-button>
+                        <ion-button size="small" [disabled]="!gameService.game.category || gameService.game.rollsLeft === 3" (click)="save()">Save</ion-button>
                     </ion-col>
                 </ion-row>
             </ion-grid>
@@ -65,8 +65,16 @@
                 <span>Rolls left: {{ gameService.game.rollsLeft }}</span>
             </ion-col>
             <ion-col text-end>
-                <ion-button [disabled]="!gameService.game.rollsLeft || !gameService.game.turnsLeft || !this.unlockedCount"
+                <ion-button size="small" [disabled]="!gameService.game.rollsLeft || !gameService.game.turnsLeft || !this.unlockedCount"
                             (click)="roll()">{{ rollLabel }}</ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <ion-grid *ngIf="!gameService.game?.playing">
+        <ion-row margin-start margin-end>
+            <ion-col justify-content-center>
+                <ion-button expand="block" size="small" color="success" (click)="reset()">Play again</ion-button>
             </ion-col>
         </ion-row>
     </ion-grid>
