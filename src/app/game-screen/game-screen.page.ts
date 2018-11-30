@@ -67,12 +67,10 @@ export class GameScreenPage {
     async save() {
         this.audio.play('click');
         await this.gameService.save();
-        if (this.gameService.game && this.gameService.game.turnsLeft) {
-            this.setRollLabel();
-        } else {
-            await this.gameService.gameOver();
+        if (!this.gameService.game || !this.gameService.game.turnsLeft) {
             await this.gameOver();
         }
+        this.setRollLabel();
     }
 
     reset() {
