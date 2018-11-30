@@ -95,13 +95,13 @@ export class GameScreenPage {
                         handler: () => this.reset()
                     },
                     {
-                        text: 'View Game',
+                        text: 'Close',
                         role: 'cancel'
                     },
-                    {
-                        text: 'Close',
-                        handler: () => this.goHome()
-                    },
+                    // {
+                    //     text: 'Close',
+                    //     handler: () => this.goHome()
+                    // },
                 ]
         });
 
