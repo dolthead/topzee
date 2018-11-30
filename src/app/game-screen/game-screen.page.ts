@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {GameService} from '../services/game.service';
 import {Router} from '@angular/router';
 import {AlertController} from '@ionic/angular';
+import {AudioService} from '../services/audio.service';
 
 @Component({
     selector: 'app-game-screen',
@@ -13,8 +14,10 @@ export class GameScreenPage {
     unlockedCount = 5;
     rollLabel: String;
 
-    constructor(private router: Router, public gameService: GameService,
-                public alertController: AlertController) {
+    constructor(private router: Router,
+                public gameService: GameService,
+                public alertController: AlertController,
+                public audio: AudioService) {
     }
 
     ionViewWillEnter() {
@@ -30,6 +33,7 @@ export class GameScreenPage {
         // await this.gameOver();
         // return;
 
+        this.audio.play('click');
         if (this.gameService.game.rollsLeft) {
             this.gameService.clearSelectedCategory();
             this.gameService.game.dice.filter(die => !die.locked)
@@ -41,6 +45,7 @@ export class GameScreenPage {
     }
 
     dieClick(i) {
+        this.audio.play('click');
         this.gameService.game.dice[i].locked = !this.gameService.game.dice[i].locked;
         this.setRollLabel();
     }
@@ -55,10 +60,12 @@ export class GameScreenPage {
     }
 
     setSelectedCategory(catName) {
+        this.audio.play('click');
         this.gameService.setSelectedCategory(catName);
     }
 
     async save() {
+        this.audio.play('click');
         await this.gameService.save();
         if (this.gameService.game && this.gameService.game.turnsLeft) {
             this.setRollLabel();
@@ -88,13 +95,13 @@ export class GameScreenPage {
                         handler: () => this.reset()
                     },
                     {
-                        text: 'Show Stats',
-                        handler: () => this.goHome()
+                        text: 'View Game',
+                        role: 'cancel'
                     },
                     {
-                        text: 'View Game Board',
-                        role: 'cancel'
-                    }
+                        text: 'Close',
+                        handler: () => this.goHome()
+                    },
                 ]
         });
 
