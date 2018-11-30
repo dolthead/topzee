@@ -10,7 +10,7 @@
 <ion-content padding>
 
     <ion-card>
-        <ion-card-content>
+        <ion-card-content class="top-card">
             <ion-grid>
                 <ion-row *ngIf="gameService.lifetimeStats.lastGame">
                     <ion-col>Last game</ion-col>
@@ -42,7 +42,7 @@
                 <ion-icon slot="start" name="pause" color="success"></ion-icon>
                 Resume Game ({{ gameService.game?.turnsLeft }} turns left)
             </ion-button>
-            <ion-button expand="block" *ngIf="gameService.game?.playing" (click)="restartGame()" color="danger" fill="outline">
+            <ion-button expand="block" *ngIf="gameService.game?.playing" (click)="restartGame()" color="light" fill="solid">
                 Restart Game
             </ion-button>
         <!--</ion-buttons>-->
