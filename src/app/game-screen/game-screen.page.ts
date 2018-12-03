@@ -45,9 +45,12 @@ export class GameScreenPage {
     }
 
     dieClick(i) {
-        this.audio.play('click');
-        this.gameService.game.dice[i].locked = !this.gameService.game.dice[i].locked;
-        this.setRollLabel();
+        if (this.gameService.game.turnsLeft
+                && this.gameService.game.rollsLeft < 3) {
+            this.audio.play('click');
+            this.gameService.game.dice[i].locked = !this.gameService.game.dice[i].locked;
+            this.setRollLabel();
+        }
     }
 
     async setRollLabel() {
@@ -60,8 +63,12 @@ export class GameScreenPage {
     }
 
     setSelectedCategory(catName) {
-        this.audio.play('click');
-        this.gameService.setSelectedCategory(catName);
+        if (this.gameService.game.turnsLeft
+                && catName !== this.gameService.game.category
+                && this.gameService.game.rollsLeft < 3) {
+            this.audio.play('click');
+            this.gameService.setSelectedCategory(catName);
+        }
     }
 
     async save() {
