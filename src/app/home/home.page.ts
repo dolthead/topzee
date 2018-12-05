@@ -18,18 +18,18 @@ export class HomePage {
     }
 
     ionViewDidEnter() {
-        this.audio.preload('click', 'assets/sounds/click.mp3');
+        this.audio.preload('score', 'assets/sounds/score.mp3');
     }
 
     restartGame() {
-        this.audio.play('click');
+        this.audio.play('score');
         this.gameService.resetGame()
             .then(() => this.router.navigateByUrl('/GameScreen'),
                 () => this.router.navigateByUrl('/GameScreen'));
     }
 
     playGame() {
-        this.audio.play('click');
+        this.audio.play('score');
         if (!this.gameService.game || !this.gameService.game.turnsLeft) {
             this.gameService.resetGame()
                 .then(() => this.router.navigateByUrl('/GameScreen'),

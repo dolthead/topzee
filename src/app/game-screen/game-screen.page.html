@@ -17,14 +17,16 @@
                         <ion-row *ngFor="let cat of gameService.game.categories.slice(0, 7)" [ngClass]="{'disabled': cat.name === 'Bonus'}"
                                 tappable (click)="setSelectedCategory(cat.name)">
                             <ion-col>{{ cat.name }}</ion-col>
-                            <ion-col text-end [ngClass]="{'unscored': cat.score === undefined || gameService.game.category === cat.name}">{{ cat.score }}</ion-col>
+                            <ion-col text-end class="tappable-height"
+                                     [ngClass]="{'unscored': cat.score === undefined || gameService.game.category === cat.name}">{{ cat.score }}</ion-col>
                         </ion-row>
                     </ion-col>
                     <ion-col>
                         <ion-row *ngFor="let cat of gameService.game.categories.slice(7)"
                                  tappable (click)="setSelectedCategory(cat.name)">
                             <ion-col>{{ cat.name }}</ion-col>
-                            <ion-col text-end [ngClass]="{'unscored': cat.score === undefined || gameService.game.category === cat.name}">{{ cat.score }}</ion-col>
+                            <ion-col text-end class="tappable-height"
+                                     [ngClass]="{'unscored': cat.score === undefined || gameService.game.category === cat.name}">{{ cat.score }}</ion-col>
                         </ion-row>
                     </ion-col>
                 </ion-row>
@@ -33,17 +35,17 @@
             <ion-grid>
                 <ion-row>
                     <ion-col><span class="disabled">Subtotal</span></ion-col>
-                    <ion-col text-end>{{ gameService.game.subtotalLeft }}</ion-col>
+                    <ion-col class="tappable-height" text-end>{{ gameService.game.subtotalLeft }}</ion-col>
                     <ion-col><span class="disabled">Subtotal</span></ion-col>
-                    <ion-col text-end>{{ gameService.game.subtotalRight }}</ion-col>
+                    <ion-col class="tappable-height" text-end>{{ gameService.game.subtotalRight }}</ion-col>
                 </ion-row>
                 <ion-row>
                     <ion-col><span class="disabled">TOTAL</span></ion-col>
-                    <ion-col text-end>{{ gameService.game.total }}</ion-col>
+                    <ion-col class="tappable-height" text-end>{{ gameService.game.total }}</ion-col>
                     <ion-col></ion-col>
                     <ion-col text-end>
-                        <ion-button size="small" [disabled]="!gameService.game.category || gameService.game.rollsLeft === 3"
-                                    (click)="save()">Save</ion-button>
+                        <ion-button size="medium" [disabled]="!gameService.game.category || gameService.game.rollsLeft === 3"
+                                    class="tappable-height" (click)="save()">Save</ion-button>
                     </ion-col>
                 </ion-row>
             </ion-grid>
@@ -66,8 +68,8 @@
                 <span>Rolls left: {{ gameService.game.rollsLeft }}</span>
             </ion-col>
             <ion-col text-end>
-                <ion-button size="small" [disabled]="!gameService.game.rollsLeft || !gameService.game.turnsLeft || !this.unlockedCount"
-                            (click)="roll()">{{ rollLabel }}</ion-button>
+                <ion-button size="medium" [disabled]="!gameService.game.rollsLeft || !gameService.game.turnsLeft || !this.unlockedCount"
+                            class="tappable-height" (click)="roll()">{{ rollLabel }}</ion-button>
             </ion-col>
         </ion-row>
     </ion-grid>

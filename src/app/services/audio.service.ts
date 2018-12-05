@@ -48,15 +48,17 @@ export class AudioService {
 
         // console.log('sounds', JSON.stringify(this.sounds));
         const soundToPlay: Sound = this.sounds.find((sound) => sound.key === key);
-        if (soundToPlay.isNative) {
-            this.nativeAudio.play(soundToPlay.asset).then((res) => {
-                console.log(res);
-            }, (err) => {
-                console.log(err);
-            });
-        } else {
-            this.audioPlayer.src = soundToPlay.asset;
-            this.audioPlayer.play();
+        if (soundToPlay) {
+            if (soundToPlay.isNative) {
+                this.nativeAudio.play(soundToPlay.asset).then((res) => {
+                    console.log(res);
+                }, (err) => {
+                    console.log(err);
+                });
+            } else {
+                this.audioPlayer.src = soundToPlay.asset;
+                this.audioPlayer.play();
+            }
         }
 
     }

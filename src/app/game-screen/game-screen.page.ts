@@ -25,21 +25,30 @@ export class GameScreenPage {
         setTimeout(() => this.setRollLabel(), 100);
     }
 
-    async roll() {
-        // this.gameService.game.categories.forEach(cat => cat.name !== 'Any' ? cat.score = 5 : 0);
-        // this.gameService.game.turnsLeft = this.gameService.game.rollsLeft = 1;
-        // await this.gameService.calcTotals();
-        // this.gameService.gameOver();
-        // await this.gameOver();
-        // return;
+    ionViewDidEnter() {
+        this.audio.preload('roll0', 'assets/sounds/roll0.mp3');
+        this.audio.preload('roll1', 'assets/sounds/roll1.mp3');
+        this.audio.preload('roll2', 'assets/sounds/roll2.mp3');
+        this.audio.preload('dice0', 'assets/sounds/dice0.mp3');
+        this.audio.preload('dice1', 'assets/sounds/dice1.mp3');
+        this.audio.preload('score', 'assets/sounds/score.mp3');
+        this.audio.preload('score0', 'assets/sounds/score0.mp3');
+        this.audio.preload('oak5', 'assets/sounds/oak5.mp3');
+        this.audio.preload('gameOver', 'assets/sounds/gameOver.mp3');
+    }
 
-        this.audio.play('click');
+    async roll() {
+        this.audio.play('roll0');
         if (this.gameService.game.rollsLeft) {
             this.gameService.clearSelectedCategory();
             this.gameService.game.dice.filter(die => !die.locked)
+                // .forEach(die => die.pips = 6;
                 .forEach(die => die.pips = Math.ceil(Math.random() * 6 ));
             this.gameService.game.rollsLeft--;
             this.setRollLabel();
+            if (this.gameService.getOAKScore(5)) {
+                this.audio.play('oak5');
+            }
         }
         this.gameService.storeGame();
     }
@@ -47,7 +56,7 @@ export class GameScreenPage {
     dieClick(i) {
         if (this.gameService.game.turnsLeft
                 && this.gameService.game.rollsLeft < 3) {
-            this.audio.play('click');
+            this.audio.play('dice' + (this.gameService.game.dice[i].locked ? 1 : 0));
             this.gameService.game.dice[i].locked = !this.gameService.game.dice[i].locked;
             this.setRollLabel();
         }
@@ -66,13 +75,13 @@ export class GameScreenPage {
         if (this.gameService.game.turnsLeft
                 && catName !== this.gameService.game.category
                 && this.gameService.game.rollsLeft < 3) {
-            this.audio.play('click');
-            this.gameService.setSelectedCategory(catName);
+            const points = this.gameService.setSelectedCategory(catName);
+            this.audio.play(points ? 'score' : 'score0');
         }
     }
 
     async save() {
-        this.audio.play('click');
+        this.audio.play('score');
         await this.gameService.save();
         if (!this.gameService.game || !this.gameService.game.turnsLeft) {
             await this.gameOver();
@@ -90,10 +99,10 @@ export class GameScreenPage {
     }
 
     async gameOver() {
+        this.audio.play('gameOver');
         const alert = await this.alertController.create({
-            header: 'Game Completed',
-            // subHeader: 'Subtitle',
-            message: `You scored ${ this.gameService.lifetimeStats.lastGame }!`,
+            header: `You scored ${ this.gameService.lifetimeStats.lastGame }!`,
+            // message: 'Game Completed',
             buttons: [
                     {
                         text: 'Play Again',

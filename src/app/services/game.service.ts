@@ -33,12 +33,14 @@ const newGame: any = {
     categories: newCategories(),
     subtotalLeft: 0,
     subtotalRight: 0,
-    total: 0
+    total: 0,
+    extraOak5Count: 0
 };
 const GAME_DATA = 'GAME_DATA';
 const HISTORY_DATA = 'HISTORY_DATA';
 const MIN_FOR_BONUS = 63;
 const BONUS = 50;
+const OAK5_SCORE = 50;
 
 @Injectable({
     providedIn: 'root'
@@ -111,7 +113,7 @@ export class GameService {
             case '5 Str':
                 return this.get5StraightScore();
             case '5 Oak':
-                return this.getOAKScore(5) > 0 ? 50 : 0;
+                return this.getOAKScore(5) > 0 ? OAK5_SCORE : 0;
             case 'Any':
                 return this.getDiceTotal();
 
@@ -120,7 +122,16 @@ export class GameService {
         }
     }
 
+    public alreadyHas5Oak() {
+        return this.game.category !== '5 Oak'
+                && this.getCat('5 Oak')
+                && this.getCat('5 Oak').score === OAK5_SCORE;
+    }
+
     public async save() {
+        if (this.alreadyHas5Oak() && this.getOAKScore(5)) {
+            this.game.extraOak5Count ++;
+        }
         this.game.category = undefined;
         await this.calcTotals();
 
@@ -145,7 +156,8 @@ export class GameService {
         this.game.subtotalRight = this.game.categories.slice(7)
             .reduce((total, cat) => total + (cat.score || 0), 0);
 
-        this.game.total = this.game.subtotalLeft + this.game.subtotalRight;
+        this.game.total = this.game.subtotalLeft + this.game.subtotalRight
+                + (this.game.extraOak5Count * OAK5_SCORE);
     }
 
     public clearSelectedCategory() {
@@ -156,6 +168,7 @@ export class GameService {
     }
 
     public setSelectedCategory(catName) {
+        let points = 0;
         if (catName !== 'Bonus'
                 && catName !== this.game.category
                 && this.game.dice[0].pips > 0) {
@@ -163,9 +176,11 @@ export class GameService {
             this.clearSelectedCategory();
             if (cat.score === undefined) {
                 this.game.category = catName;
-                this.setCatScore(catName, this.getScore(catName));
+                points = this.getScore(catName);
+                this.setCatScore(catName, points);
             }
         }
+        return points;
     }
 
     async gameOver() {
