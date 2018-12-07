@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {Platform} from '@ionic/angular';
 import {NativeAudio} from '@ionic-native/native-audio/ngx';
 
-
 interface Sound {
     key: string;
     asset: string;
@@ -37,7 +36,7 @@ export class AudioService {
                     key: key,
                     asset: asset
                 });
-                console.log('preload', key, 'isNative:', this.isNative);
+                // console.log('preload', key, 'isNative:', this.isNative);
             } else {
                 const audio = new Audio();
                 audio.src = asset;
@@ -45,7 +44,7 @@ export class AudioService {
                     key: key,
                     asset: asset
                 });
-                console.log('preload', key, 'isNative:', this.isNative);
+                // console.log('preload', key, 'isNative:', this.isNative);
             }
         }
     }
