@@ -13,6 +13,7 @@ export class GameScreenPage {
 
     unlockedCount = 5;
     rollLabel: String;
+    debounced = false;
 
     constructor(private router: Router,
                 public gameService: GameService,
@@ -38,19 +39,23 @@ export class GameScreenPage {
     }
 
     async roll() {
-        this.audio.play('roll0');
-        if (this.gameService.game.rollsLeft) {
-            this.gameService.clearSelectedCategory();
-            this.gameService.game.dice.filter(die => !die.locked)
+        if (!this.debounced) {
+            this.debounced = true;
+            setTimeout(() => this.debounced = false, 1000);
+            this.audio.play('roll0');
+            if (this.gameService.game.rollsLeft) {
+                this.gameService.clearSelectedCategory();
+                this.gameService.game.dice.filter(die => !die.locked)
                 // .forEach(die => die.pips = 6;
-                .forEach(die => die.pips = Math.ceil(Math.random() * 6 ));
-            this.gameService.game.rollsLeft--;
-            this.setRollLabel();
-            if (this.gameService.getOAKScore(5)) {
-                this.audio.play('oak5');
+                    .forEach(die => die.pips = Math.ceil(Math.random() * 6));
+                this.gameService.game.rollsLeft--;
+                this.setRollLabel();
+                if (this.gameService.getOAKScore(5)) {
+                    this.audio.play('oak5');
+                }
             }
+            this.gameService.storeGame();
         }
-        this.gameService.storeGame();
     }
 
     dieClick(i) {
