@@ -31,20 +31,28 @@ ion-row + ion-row {
     margin-top: 6px;
 }
 
-.scoreboard ion-col ion-row:not(.disabled) {
+//.scoreboard ion-col ion-row:not(.disabled) {
+.scoreboard ion-col ion-row {
     ion-col {
         min-height: 1.6em;
-        height: 4vh;
+        height: 5.2vh;
         margin: auto 0;
+        display: flex;
+        align-items: center;
     }
     ion-col:nth-child(1) {
         color: black;
+        justify-content: flex-start;
+        font-size: 2.5vh;
     }
     ion-col:nth-child(2) {
         padding: 3px 8px;
-        max-width: 40px;
-        font-size: 1.1em;
+        max-width: 60px;
+        width: 7vw;
+        //font-size: 1.1em;
+        font-size: 3.3vh;
         color: black;
+        justify-content: flex-end;
 
         &.unscored {
             border-radius: 10px;
@@ -53,9 +61,19 @@ ion-row + ion-row {
     }
 }
 
+[dice-row] {
+    display: flex;
+    flex-direction: row;
+    margin-top: 4px;
+    justify-content: center;
+}
+
 .die {
-    height: 12vw;
-    width: 12vw;
+    margin: 4px;
+    //height: 12vw;
+    //width: 12vw;
+    height: 7vh;
+    width: 7vh;
     max-height: 64px;
     max-width: 64px;
     border-radius: 20%;
@@ -68,7 +86,7 @@ ion-row + ion-row {
     .pips {
         margin: auto 0;
         color: black;
-        font-size: 1.7em;
+        font-size: 5.5vh;
     }
     &.locked {
         background-color: #eee;
@@ -77,4 +95,25 @@ ion-row + ion-row {
 
 .disabled {
     color: #999;
+}
+
+[roll-row] {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 12px;
+    margin-top: 4px;
+}
+
+[roll-icon] {
+    height: 3vh;
+    width: 3vh;
+    background-color: var(--ion-color-success);
+    border-radius: 50%;
+    box-shadow: 2px 2px 2px var(--ion-color-success-shade);
+    margin: 4px;
+}
+
+[margin-left] {
+    margin-left: 8px;
 }

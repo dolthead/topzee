@@ -74,6 +74,7 @@ export class GameScreenPage {
     setSelectedCategory(catName) {
         if (this.gameService.game.turnsLeft
                 && catName !== this.gameService.game.category
+                && catName !== 'Bonus'
                 && this.gameService.game.rollsLeft < 3) {
             const points = this.gameService.setSelectedCategory(catName);
             this.audio.play(points ? 'score' : 'score0');
