@@ -83,7 +83,7 @@
             <div class="die" tappable (click)="dieClick(i)" [ngClass]="{ 'locked': gameService.game.dice[i].locked }">
                 <!--<span class="pips">{{ die.pips ? die.pips : '' }}</span>-->
                 <span class="pips" [style.display]="die.pips ? 'block' : 'none'">
-                    <ion-img [src]="'assets/svg/die' + die.pips + '.svg'"></ion-img>
+                    <img [src]="'assets/svg/die' + die.pips + '.svg'" />
                 </span>
             </div>
         </div>

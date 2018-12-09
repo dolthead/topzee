@@ -46,7 +46,6 @@ export class GameScreenPage {
             if (this.gameService.game.rollsLeft) {
                 this.gameService.clearSelectedCategory();
                 this.gameService.game.dice.filter(die => !die.locked)
-                // .forEach(die => die.pips = 6;
                     .forEach(die => die.pips = Math.ceil(Math.random() * 6));
                 this.gameService.game.rollsLeft--;
                 this.setRollLabel();

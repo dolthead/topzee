@@ -86,7 +86,7 @@ ion-row + ion-row {
     }
     &.locked {
         background-color: #ddd;
-        border: 3px lightgreen solid;
+        border: 3px var(--ion-color-success-shade) solid;
     }
 }
 
