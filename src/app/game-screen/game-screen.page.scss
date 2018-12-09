@@ -31,7 +31,6 @@ ion-row + ion-row {
     margin-top: 6px;
 }
 
-//.scoreboard ion-col ion-row:not(.disabled) {
 .scoreboard ion-col ion-row {
     ion-col {
         min-height: 1.6em;
@@ -49,7 +48,6 @@ ion-row + ion-row {
         padding: 3px 8px;
         max-width: 60px;
         width: 7vw;
-        //font-size: 1.1em;
         font-size: 3.3vh;
         color: black;
         justify-content: flex-end;
@@ -70,13 +68,11 @@ ion-row + ion-row {
 
 .die {
     margin: 4px;
-    //height: 12vw;
-    //width: 12vw;
     height: 7vh;
     width: 7vh;
     max-height: 64px;
     max-width: 64px;
-    border-radius: 20%;
+    border-radius: 10%;
     color: #666;
     border: 1px #bbb solid;
     background-color: #fff;
@@ -84,7 +80,7 @@ ion-row + ion-row {
     justify-content: center;
     align-content: center;
     .pips {
-        margin: auto 0;
+        margin: 2px 0 0 2px;
         color: black;
         font-size: 5.5vh;
     }
@@ -101,7 +97,7 @@ ion-row + ion-row {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    margin-right: 12px;
+    margin-right: 20px;
     margin-top: 4px;
 }
 
@@ -116,4 +112,9 @@ ion-row + ion-row {
 
 [margin-left] {
     margin-left: 8px;
+}
+
+.topz-button {
+    --height: 5.2vh;
+    --min-height: 1.6em;
 }

@@ -66,7 +66,7 @@
                             <ion-col>
                                 <span>
                                     <ion-button [disabled]="!gameService.game.category || gameService.game.rollsLeft === 3"
-                                            class="tappable-height" (click)="save()">Save</ion-button>
+                                            class="topz-button" (click)="save()">Save</ion-button>
                                 </span>
                             </ion-col>
                         </ion-row>
@@ -81,7 +81,10 @@
     <div dice-row>
         <div *ngFor="let die of gameService.game.dice; index as i">
             <div class="die" tappable (click)="dieClick(i)" [ngClass]="{ 'locked': gameService.game.dice[i].locked }">
-                <span class="pips">{{ die.pips ? die.pips : '' }}</span>
+                <!--<span class="pips">{{ die.pips ? die.pips : '' }}</span>-->
+                <span class="pips" [style.display]="die.pips ? 'block' : 'none'">
+                    <ion-img [src]="'assets/svg/die' + die.pips + '.svg'"></ion-img>
+                </span>
             </div>
         </div>
     </div>
@@ -89,7 +92,7 @@
     <div roll-row>
         <div *ngFor="let roll of [].constructor(gameService.game.rollsLeft)" roll-icon></div>
         <ion-button size="medium" [disabled]="!gameService.game.rollsLeft || !gameService.game.turnsLeft || !this.unlockedCount"
-                    margin-left class="tappable-height" (click)="roll()">{{ rollLabel }}</ion-button>
+                    margin-left class="topz-button" (click)="roll()">{{ rollLabel }}</ion-button>
     </div>
 
     <!--<ion-grid *ngIf="!gameService.game?.playing">-->

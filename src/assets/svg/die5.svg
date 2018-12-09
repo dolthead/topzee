@@ -45,11 +45,11 @@
        inkscape:collect="always"
        id="linearGradient9462">
       <stop
-         style="stop-color:#a40000;stop-opacity:1"
+         style="stop-color:green;stop-opacity:1"
          offset="0"
          id="stop9464" />
       <stop
-         style="stop-color:#ef2929;stop-opacity:1"
+         style="stop-color:lightgreen;stop-opacity:1"
          offset="1"
          id="stop9466" />
     </linearGradient>
@@ -208,11 +208,11 @@
        inkscape:collect="always"
        id="linearGradient9462-0">
       <stop
-         style="stop-color:#a40000;stop-opacity:1"
+         style="stop-color:green;stop-opacity:1"
          offset="0"
          id="stop9464-1" />
       <stop
-         style="stop-color:#ef2929;stop-opacity:1"
+         style="stop-color:lightgreen;stop-opacity:1"
          offset="1"
          id="stop9466-6" />
     </linearGradient>
@@ -403,10 +403,10 @@
        height="74.285713"
        width="74.285713"
        id="rect10729"
-       style="opacity:0.72244903;fill:#888a85;fill-opacity:1;stroke:#888a85;stroke-width:0.44291338;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;filter:url(#filter10343-3)"
+       style="opacity:0.72244903;fill:#888a85;fill-opacity:0;stroke:#888a85;stroke-width:0.44291338;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;filter:url(#filter10343-3)"
        transform="matrix(4,0,0,4,219.99784,-3151.0864)" />
     <rect
-       style="fill:url(#linearGradient6269);fill-opacity:1;stroke:url(#linearGradient6271);stroke-width:1.77165353;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:url(#linearGradient6269);fill-opacity:0;stroke:url(#linearGradient6271);stroke-width:1.77165353;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect10731"
        width="297.14285"
        height="297.14285"

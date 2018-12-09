@@ -33,26 +33,17 @@
         </ion-card-content>
     </ion-card>
 
-    <!--<ion-toolbar>-->
-        <!--<ion-buttons slot="start">-->
-            <ion-button expand="block" *ngIf="!gameService.game?.playing" (click)="playGame()">
-                <ion-icon slot="start" name="add" color="success"></ion-icon>
-                Start Game
-            </ion-button>
-            <ion-button expand="block" *ngIf="gameService.game?.playing" (click)="playGame()">
-                <ion-icon slot="start" name="pause" color="success"></ion-icon>
-                Resume Game ({{ gameService.game?.turnsLeft }} turns left)
-            </ion-button>
-            <ion-button expand="block" *ngIf="gameService.game?.playing" (click)="restartGame()" color="light" fill="solid">
-                Restart Game
-            </ion-button>
-        <!--</ion-buttons>-->
-        <!--<ion-buttons slot="end">-->
-        <!--<ion-button color="secondary">-->
-        <!--<ion-icon slot="icon-only" name="more"></ion-icon>-->
-        <!--</ion-button>-->
-        <!--</ion-buttons>-->
-    <!--</ion-toolbar>-->
-
+    <ion-button expand="block" *ngIf="!gameService.game?.playing" (click)="playGame()">
+        <ion-icon slot="start" name="add" color="success" class="topz-button"></ion-icon>
+        Start Game
+    </ion-button>
+    <ion-button expand="block" *ngIf="gameService.game?.playing" (click)="playGame()">
+        <ion-icon slot="start" name="pause" color="success" class="topz-button"></ion-icon>
+        Resume Game ({{ gameService.game?.turnsLeft }} turns left)
+    </ion-button>
+    <ion-button expand="block" *ngIf="gameService.game?.playing" (click)="restartGame()"
+            color="light" fill="solid" class="topz-button">
+        Restart Game
+    </ion-button>
 
 </ion-content>

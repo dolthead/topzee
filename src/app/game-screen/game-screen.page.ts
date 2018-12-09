@@ -42,7 +42,7 @@ export class GameScreenPage {
         if (!this.debounced) {
             this.debounced = true;
             setTimeout(() => this.debounced = false, 1000);
-            this.audio.play('roll0');
+            this.audio.play(`roll${ Math.floor(Math.random() * 3) }`);
             if (this.gameService.game.rollsLeft) {
                 this.gameService.clearSelectedCategory();
                 this.gameService.game.dice.filter(die => !die.locked)
