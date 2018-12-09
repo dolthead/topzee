@@ -1,7 +1,6 @@
 <ion-header>
     <ion-toolbar color="primary">
         <ion-title>
-            <!--<ion-icon src="/assets/svg/dice.svg" size="large"></ion-icon>-->
             <span>Topzee</span>
         </ion-title>
     </ion-toolbar>
@@ -11,9 +10,9 @@
 
     <ion-card>
         <ion-card-content class="top-card">
-            <ion-img src="/assets/logo dice.png" style="height:100px;margin-bottom:20px" alt="topzee logo: two green dice"></ion-img>
+            <ion-img src="/assets/logo dice.png" style="height:100px;margin-bottom:10px" alt="topzee logo: two green dice"></ion-img>
             <ion-grid>
-                <ion-row *ngIf="gameService.lifetimeStats.lastGame">
+                <ion-row *ngIf="gameService.lifetimeStats.lastGame" bold>
                     <ion-col>Last game</ion-col>
                     <ion-col text-end>{{ gameService.lifetimeStats.lastGame }}</ion-col>
                 </ion-row>
@@ -22,23 +21,23 @@
                     <ion-col text-end>{{ gameService.lifetimeStats.completedGameCount }}</ion-col>
                 </ion-row>
                 <ion-row>
-                    <ion-col>Average Score</ion-col>
+                    <ion-col>Average</ion-col>
                     <ion-col text-end>{{ gameService.lifetimeStats.averageScore | number:'1.0-1' }}</ion-col>
                 </ion-row>
                 <ion-row>
                     <ion-col>High Score</ion-col>
-                    <ion-col text-end>{{ gameService.lifetimeStats.highScore }}</ion-col>
+                    <ion-col text-end>🏆 {{ gameService.lifetimeStats.highScore }}</ion-col>
                 </ion-row>
             </ion-grid>
         </ion-card-content>
     </ion-card>
 
-    <ion-button expand="block" *ngIf="!gameService.game?.playing" (click)="playGame()">
-        <ion-icon slot="start" name="add" color="success" class="topz-button"></ion-icon>
+    <ion-button expand="block" *ngIf="!gameService.game?.playing" (click)="playGame()" class="topz-button">
+        <ion-icon slot="start" name="add" color="success"></ion-icon>
         Start Game
     </ion-button>
-    <ion-button expand="block" *ngIf="gameService.game?.playing" (click)="playGame()">
-        <ion-icon slot="start" name="pause" color="success" class="topz-button"></ion-icon>
+    <ion-button expand="block" *ngIf="gameService.game?.playing" (click)="playGame()" class="topz-button">
+        <ion-icon slot="start" name="pause" color="success"></ion-icon>
         Resume Game ({{ gameService.game?.turnsLeft }} turns left)
     </ion-button>
     <ion-button expand="block" *ngIf="gameService.game?.playing" (click)="restartGame()"

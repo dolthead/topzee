@@ -85,7 +85,8 @@ ion-row + ion-row {
         font-size: 5.5vh;
     }
     &.locked {
-        background-color: #eee;
+        background-color: #ddd;
+        border: 3px lightgreen solid;
     }
 }
 
@@ -112,9 +113,4 @@ ion-row + ion-row {
 
 [margin-left] {
     margin-left: 8px;
-}
-
-.topz-button {
-    --height: 5.2vh;
-    --min-height: 1.6em;
 }

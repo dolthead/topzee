@@ -41,7 +41,7 @@ export class GameScreenPage {
     async roll() {
         if (!this.debounced) {
             this.debounced = true;
-            setTimeout(() => this.debounced = false, 1000);
+            setTimeout(() => this.debounced = false, 800);
             this.audio.play(`roll${ Math.floor(Math.random() * 3) }`);
             if (this.gameService.game.rollsLeft) {
                 this.gameService.clearSelectedCategory();
