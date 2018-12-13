@@ -64,7 +64,8 @@ export class AudioService {
                         }));
             } else {
                 this.audioPlayer.src = soundToPlay.asset;
-                this.audioPlayer.play();
+                this.audioPlayer.play()
+                    .catch(() => {});
             }
         }
 
