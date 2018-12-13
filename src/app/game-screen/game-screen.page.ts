@@ -67,14 +67,14 @@ export class GameScreenPage {
                             this.audio.play(`roll${ Math.floor(Math.random() * 3) }`);
                             die.pips = Math.ceil(Math.random() * 6);
                             this.gameService.storeGame();
+                            if (this.gameService.getOAKScore(5)) {
+                                this.audio.play('oak5');
+                            }
                         }, 10);
                     }
                 });
                 this.gameService.game.rollsLeft--;
                 this.setRollLabel();
-                if (this.gameService.getOAKScore(5)) {
-                    this.audio.play('oak5');
-                }
             }
         }
     }
