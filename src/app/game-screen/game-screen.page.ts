@@ -3,11 +3,27 @@ import {GameService} from '../services/game.service';
 import {Router} from '@angular/router';
 import {AlertController} from '@ionic/angular';
 import {AudioService} from '../services/audio.service';
+import {
+    trigger,
+    state,
+    style,
+    animate,
+    transition
+} from '@angular/animations';
 
 @Component({
     selector: 'app-game-screen',
     templateUrl: './game-screen.page.html',
     styleUrls: ['./game-screen.page.scss'],
+    animations: [
+        trigger('dieState', [
+            state('show', style({ transform: 'scale(1.0)' })),
+            state('hide', style({ transform: 'scale(0.1)' })),
+            transition('hide => show', animate('100ms')),
+            // transition('show => hide', animate('1ms')),
+            ]
+        )
+    ]
 })
 export class GameScreenPage {
 
@@ -38,22 +54,28 @@ export class GameScreenPage {
         this.audio.preload('gameOver', 'assets/sounds/gameOver.mp3');
     }
 
-    async roll() {
+    roll() {
         if (!this.debounced) {
             this.debounced = true;
             setTimeout(() => this.debounced = false, 800);
-            this.audio.play(`roll${ Math.floor(Math.random() * 3) }`);
             if (this.gameService.game.rollsLeft) {
                 this.gameService.clearSelectedCategory();
-                this.gameService.game.dice.filter(die => !die.locked)
-                    .forEach(die => die.pips = Math.ceil(Math.random() * 6));
+                this.gameService.game.dice.forEach((die) => {
+                    if (!die.locked) {
+                        die.pips = 0;
+                        setTimeout(() => {
+                            this.audio.play(`roll${ Math.floor(Math.random() * 3) }`);
+                            die.pips = Math.ceil(Math.random() * 6);
+                            this.gameService.storeGame();
+                        }, 10);
+                    }
+                });
                 this.gameService.game.rollsLeft--;
                 this.setRollLabel();
                 if (this.gameService.getOAKScore(5)) {
                     this.audio.play('oak5');
                 }
             }
-            this.gameService.storeGame();
         }
     }
 

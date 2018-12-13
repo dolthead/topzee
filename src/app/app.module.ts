@@ -10,6 +10,7 @@ import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {IonicStorageModule} from '@ionic/storage';
 import {NativeAudio} from '@ionic-native/native-audio/ngx';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [AppComponent],
@@ -21,7 +22,8 @@ import {NativeAudio} from '@ionic-native/native-audio/ngx';
         IonicStorageModule.forRoot({
             name: '__topzee',
             driverOrder: ['indexeddb', 'sqlite', 'websql']
-        })
+        }),
+        BrowserAnimationsModule
     ],
     providers: [
         StatusBar,
