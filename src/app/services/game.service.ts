@@ -18,9 +18,9 @@ const newCategories = () => JSON.parse(JSON.stringify([
     { name: 'Bonus', score: undefined },
     { name: '3 Oak', score: undefined },
     { name: '4 Oak', score: undefined },
-    { name: '2+3 Oak', score: undefined },
-    { name: '4 Str', score: undefined },
-    { name: '5 Str', score: undefined },
+    { name: 'Full House', score: undefined },
+    { name: '4 Straight', score: undefined },
+    { name: '5 Straight', score: undefined },
     { name: '5 Oak', score: undefined },
     { name: 'Any', score: undefined }
 ]));
@@ -106,11 +106,11 @@ export class GameService {
                 return this.getOAKScore(3);
             case '4 Oak':
                 return this.getOAKScore(4);
-            case '2+3 Oak':
+            case 'Full House':
                 return this.get23OAKScore();
-            case '4 Str':
+            case '4 Straight':
                 return this.get4StraightScore();
-            case '5 Str':
+            case '5 Straight':
                 return this.get5StraightScore();
             case '5 Oak':
                 return this.getOAKScore(5) > 0 ? OAK5_SCORE : 0;
