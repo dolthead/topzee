@@ -32,16 +32,16 @@
         </ion-card-content>
     </ion-card>
 
-    <ion-button expand="block" *ngIf="!gameService.game?.playing" (click)="playGame()" class="topz-button">
+    <ion-button expand="block" *ngIf="!gameService.game?.playing" (click)="playGame()">
         <ion-icon slot="start" name="add" color="success"></ion-icon>
         Start Game
     </ion-button>
-    <ion-button expand="block" *ngIf="gameService.game?.playing" (click)="playGame()" class="topz-button">
+    <ion-button expand="block" *ngIf="gameService.game?.playing" (click)="playGame()">
         <ion-icon slot="start" name="pause" color="success"></ion-icon>
         Resume Game ({{ gameService.game?.turnsLeft }} turns left)
     </ion-button>
     <ion-button expand="block" *ngIf="gameService.game?.playing" (click)="restartGame()"
-            color="light" fill="solid" class="topz-button">
+            color="light" fill="solid">
         Restart Game
     </ion-button>
 

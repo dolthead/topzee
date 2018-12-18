@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {GameService} from '../services/game.service';
 import {Router} from '@angular/router';
-import {AlertController} from '@ionic/angular';
+import {AlertController, ModalController} from '@ionic/angular';
 import {AudioService} from '../services/audio.service';
 import {
     trigger,
@@ -10,6 +10,7 @@ import {
     animate,
     transition
 } from '@angular/animations';
+import {HelpPage} from '../help/help.page';
 
 @Component({
     selector: 'app-game-screen',
@@ -34,7 +35,8 @@ export class GameScreenPage {
     constructor(private router: Router,
                 public gameService: GameService,
                 public alertController: AlertController,
-                public audio: AudioService) {
+                public audio: AudioService,
+                private modalController: ModalController) {
     }
 
     ionViewWillEnter() {
@@ -52,6 +54,13 @@ export class GameScreenPage {
         this.audio.preload('score0', 'assets/sounds/score0.mp3');
         this.audio.preload('oak5', 'assets/sounds/oak5.mp3');
         this.audio.preload('gameOver', 'assets/sounds/gameOver.mp3');
+    }
+
+    async showHelp() {
+        const modal = await this.modalController.create({
+            component: HelpPage
+        });
+        return await modal.present();
     }
 
     roll() {

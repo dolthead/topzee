@@ -4,6 +4,9 @@
             <ion-back-button defaultHref="home"></ion-back-button>
         </ion-buttons>
         <ion-title>Topzee</ion-title>
+        <ion-buttons slot="end" (click)="showHelp()">
+            <ion-icon size="large" name="help-circle-outline"></ion-icon>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
@@ -89,7 +92,7 @@
     <div roll-row>
         <div *ngFor="let roll of [].constructor(gameService.game?.rollsLeft)" roll-icon></div>
         <ion-button size="medium" [disabled]="!gameService.game?.rollsLeft || !gameService.game?.turnsLeft || !this.unlockedCount"
-                    margin-left class="topz-button" (click)="roll()">{{ rollLabel }}</ion-button>
+                    margin-left (click)="roll()">{{ rollLabel }}</ion-button>
     </div>
 
 </ion-content>

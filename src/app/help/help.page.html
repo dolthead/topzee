@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Scoring</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-grid>
+
+    <ion-row>
+      <ion-col size="3">Ones</ion-col>
+      <ion-col>The sum of the dice with one pip</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="3">Twos</ion-col>
+      <ion-col>The sum of the dice with two pips</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="3">Threes</ion-col>
+      <ion-col>The sum of the dice with three pips</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="3">Fours</ion-col>
+      <ion-col>The sum of the dice with four pips</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="3">Fives</ion-col>
+      <ion-col>The sum of the dice with five pips</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="3">Sixes</ion-col>
+      <ion-col>The sum of the dice with six pips</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="3">Bonus</ion-col>
+      <ion-col>Get at least 63 points in the sections above - 50 point bonus</ion-col>
+    </ion-row>
+
+    <ion-row padding-top>
+      <ion-col size="3">3 Oak</ion-col>
+      <ion-col>3 of a kind - the sum of all the dice, if there are at least 3 of the same number</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="3">4 Oak</ion-col>
+      <ion-col>4 of a kind - the sum of all the dice, if there are at least 4 of the same number</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="3">Full House</ion-col>
+      <ion-col>3 of a kind and a pair - 25 points</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="3">4 Straight</ion-col>
+      <ion-col>4 numbers in a row - 30 points</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="3">5 Straight</ion-col>
+      <ion-col>5 numbers in a row - 40 points</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="3">5 Oak</ion-col>
+      <ion-col>5 of a kind - 50 points</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="3">Any</ion-col>
+      <ion-col>Any numbers on the dice - the sum of all the dice</ion-col>
+    </ion-row>
+
+    <ion-row padding-top>
+      <ion-col size="3">5 Oak Bonus</ion-col>
+      <ion-col>Any extra rolls of 5 of a kind - 50 point bonus (added only to the Total)</ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+  <ion-button (click)="cancel()">Close</ion-button>
+
+</ion-content>
