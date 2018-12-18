@@ -10,8 +10,13 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-.top-card {
+[top-card] {
+    margin: 16px;
+}
+
+[top-content] {
     background-color: white;
+    padding: 0;
 }
 
 .topz-button {

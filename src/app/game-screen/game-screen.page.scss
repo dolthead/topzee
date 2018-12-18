@@ -42,7 +42,12 @@ ion-row + ion-row {
     ion-col:nth-child(1) {
         color: black;
         justify-content: flex-start;
-        font-size: 2.5vh;
+        font-size: 2.4vh;
+        overflow-x: hidden;
+        span {
+            overflow-x: hidden;
+            text-overflow: ellipsis;
+        }
     }
     ion-col:nth-child(2) {
         padding: 3px 8px;
