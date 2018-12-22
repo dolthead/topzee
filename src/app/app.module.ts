@@ -11,6 +11,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {IonicStorageModule} from '@ionic/storage';
 import {NativeAudio} from '@ionic-native/native-audio/ngx';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {Vibration} from '@ionic-native/vibration/ngx';
 
 @NgModule({
     declarations: [AppComponent],
@@ -29,7 +30,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
         StatusBar,
         SplashScreen,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-        NativeAudio
+        NativeAudio,
+        Vibration
     ],
     bootstrap: [AppComponent]
 })

@@ -11,6 +11,7 @@ import {
     transition
 } from '@angular/animations';
 import {HelpPage} from '../help/help.page';
+import {Vibration} from '@ionic-native/vibration/ngx';
 
 @Component({
     selector: 'app-game-screen',
@@ -36,7 +37,8 @@ export class GameScreenPage {
                 public gameService: GameService,
                 public alertController: AlertController,
                 public audio: AudioService,
-                private modalController: ModalController) {
+                private modalController: ModalController,
+                private vibration: Vibration) {
     }
 
     ionViewWillEnter() {
@@ -78,6 +80,7 @@ export class GameScreenPage {
                             this.gameService.storeGame();
                             if (this.gameService.getOAKScore(5)) {
                                 this.audio.play('oak5');
+                                this.vibration.vibrate(500);
                             }
                         }, 10);
                     }
