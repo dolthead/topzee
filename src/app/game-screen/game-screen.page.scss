@@ -42,7 +42,7 @@ ion-row + ion-row {
     ion-col:nth-child(1) {
         color: black;
         justify-content: flex-start;
-        font-size: 2.4vh;
+        font-size: 4vw;
         overflow-x: hidden;
         span {
             overflow-x: hidden;
@@ -73,8 +73,8 @@ ion-row + ion-row {
 
 .die {
     margin: 4px;
-    height: 7vh;
-    width: 7vh;
+    height: 16vw;
+    width: 16vw;
     max-height: 64px;
     max-width: 64px;
     border-radius: 10%;
