@@ -12,21 +12,21 @@
         <ion-card-content top-content>
             <ion-img src="/assets/logo dice.png" style="height:100px;margin-bottom:10px" alt="topzee logo: two green dice"></ion-img>
             <ion-grid>
-                <ion-row *ngIf="gameService.lifetimeStats.lastGame" bold>
+                <ion-row bold>
                     <ion-col>Last game</ion-col>
-                    <ion-col text-end>{{ gameService.lifetimeStats.lastGame }}</ion-col>
+                    <ion-col text-end>344</ion-col>
                 </ion-row>
                 <ion-row>
                     <ion-col>Games played</ion-col>
-                    <ion-col text-end>{{ gameService.lifetimeStats.completedGameCount }}</ion-col>
+                    <ion-col text-end>11</ion-col>
                 </ion-row>
                 <ion-row>
                     <ion-col>Average</ion-col>
-                    <ion-col text-end>{{ gameService.lifetimeStats.averageScore | number:'1.0-1' }}</ion-col>
+                    <ion-col text-end>265</ion-col>
                 </ion-row>
                 <ion-row>
                     <ion-col>High Score</ion-col>
-                    <ion-col text-end>🏆 {{ gameService.lifetimeStats.highScore }}</ion-col>
+                    <ion-col text-end>🏆 410</ion-col>
                 </ion-row>
             </ion-grid>
         </ion-card-content>
