@@ -1,5 +1,5 @@
 # topzee
-Ionic 4, Angular 6, poker dice clone (like yahtzee)
+Ionic 4, Angular 7, poker dice clone
 
 `npm install`
 
