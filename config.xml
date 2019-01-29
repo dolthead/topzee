@@ -76,15 +76,6 @@
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
     </platform>
-    <platform name="browser">
-        <preference name="SplashScreen" value="/assets/logo+dice.png" />
-        <preference name="AutoHideSplashScreen" value="true" />
-        <preference name="SplashScreenDelay" value="2000" />
-        <preference name="SplashScreenBackgroundColor" value="#464646" />
-        <preference name="ShowSplashScreen" value="true" />
-        <preference name="SplashScreenWidth" value="100" />
-        <preference name="SplashScreenHeight" value="100" />
-    </platform>
     <plugin name="cordova-plugin-nativestorage" spec="2.3.2" />
     <plugin name="cordova-plugin-statusbar" spec="2.4.2" />
     <plugin name="cordova-plugin-device" spec="2.0.2" />
@@ -100,5 +91,5 @@
     <plugin name="cordova-allow-background-audio" spec="1.0.2" />
     <engine name="ios" spec="4.5.5" />
     <engine name="android" spec="7.1.4" />
-    <engine name="browser" spec="~5.0.4" />
+    <engine name="browser" spec="5.0.4" />
 </widget>
