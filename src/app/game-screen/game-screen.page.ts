@@ -42,7 +42,6 @@ export class GameScreenPage {
     }
 
     ionViewWillEnter() {
-        // console.log('will enter');
         setTimeout(() => this.setRollLabel(), 100);
     }
 
@@ -65,15 +64,21 @@ export class GameScreenPage {
         return await modal.present();
     }
 
+    /**
+     * roll the dice, after 800ms debounce and if there are rolls left this turn
+     */
     roll() {
         if (!this.debounced) {
             this.debounced = true;
             setTimeout(() => this.debounced = false, 800);
+
             if (this.gameService.game.rollsLeft) {
                 this.gameService.clearSelectedCategory();
+
                 this.gameService.game.dice.forEach((die) => {
                     if (!die.locked) {
                         die.pips = 0;
+                        // timeout between 0 and new die value helps trigger animation
                         setTimeout(() => {
                             this.audio.play(`roll${ Math.floor(Math.random() * 3) }`);
                             die.pips = Math.ceil(Math.random() * 6);
@@ -91,15 +96,22 @@ export class GameScreenPage {
         }
     }
 
-    dieClick(i) {
+    /**
+     * set die selected state
+     * @param i which die to toggle (0-4)
+     */
+    dieClick(i: number) {
         if (this.gameService.game.turnsLeft
-                && this.gameService.game.rollsLeft < 3) {
+                && this.gameService.game.rollsLeft < 3) { // ignore die tap if they haven't rolled yet
             this.audio.play('dice' + (this.gameService.game.dice[i].locked ? 1 : 0));
             this.gameService.game.dice[i].locked = !this.gameService.game.dice[i].locked;
             this.setRollLabel();
         }
     }
 
+    /**
+     * update text on Roll button
+     */
     async setRollLabel() {
         this.unlockedCount = await this.gameService.game.dice.filter((d) => !d.locked).length;
         this.rollLabel = !this.gameService.game.turnsLeft
@@ -109,16 +121,23 @@ export class GameScreenPage {
                 : `No rolls left`;
     }
 
-    setSelectedCategory(catName) {
+    /**
+     * handle tapped categories with sound and potential score (must save to finish scoring)
+     * @param catName
+     */
+    setSelectedCategory(catName: String) {
         if (this.gameService.game.turnsLeft
-                && catName !== this.gameService.game.category
+                && catName !== this.gameService.game.category // ignore if they've already selected this category
                 && catName !== 'Bonus'
-                && this.gameService.game.rollsLeft < 3) {
+                && this.gameService.game.rollsLeft < 3) { // ignore if they haven't rolled the dice yet
             const points = this.gameService.setSelectedCategory(catName);
             this.audio.play(points ? 'score' : 'score0');
         }
     }
 
+    /**
+     * handle saving score and check for game over
+     */
     async save() {
         this.audio.play('score');
         await this.gameService.save();
@@ -128,20 +147,21 @@ export class GameScreenPage {
         this.setRollLabel();
     }
 
+    /**
+     * allow new game after game over
+     */
     reset() {
         this.gameService.resetGame();
         this.setRollLabel();
     }
 
-    goHome() {
-        this.router.navigateByUrl('/home');
-    }
-
+    /**
+     * handle game over with a sound and alert (state is already saved)
+     */
     async gameOver() {
         this.audio.play('gameOver');
         const alert = await this.alertController.create({
             header: `You scored ${ this.gameService.lifetimeStats.lastGame }!`,
-            // message: 'Game Completed',
             buttons: [
                     {
                         text: 'Play Again',
@@ -150,11 +170,7 @@ export class GameScreenPage {
                     {
                         text: 'Close',
                         role: 'cancel'
-                    },
-                    // {
-                    //     text: 'Close',
-                    //     handler: () => this.goHome()
-                    // },
+                    }
                 ]
         });
 

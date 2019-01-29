@@ -8,6 +8,7 @@ const newDice = () => JSON.parse(JSON.stringify([
     { pips: 0, locked: false },
     { pips: 0, locked: false }
 ]));
+
 const newCategories = () => JSON.parse(JSON.stringify([
     { name: 'Ones', score: undefined },
     { name: 'Twos', score: undefined },
@@ -24,6 +25,7 @@ const newCategories = () => JSON.parse(JSON.stringify([
     { name: '5 Oak', score: undefined },
     { name: 'Any', score: undefined }
 ]));
+
 const newGame: any = {
     playing: true,
     turnsLeft: 13,
@@ -36,9 +38,10 @@ const newGame: any = {
     total: 0,
     extraOak5Count: 0
 };
-const GAME_DATA = 'GAME_DATA';
-const HISTORY_DATA = 'HISTORY_DATA';
-const MIN_FOR_BONUS = 63;
+
+const GAME_DATA = 'GAME_DATA';          // local storage key for current game state
+const HISTORY_DATA = 'HISTORY_DATA';    // local storage key for user stats
+const MIN_FOR_BONUS = 60;
 const BONUS = 50;
 const OAK5_SCORE = 50;
 
@@ -60,19 +63,21 @@ export class GameService {
         this.loadData();
     }
 
+    /**
+     * load game data and user stats from storage
+     */
     async loadData() {
-        // console.log('init', JSON.stringify(this.game));
         await this.storage.get(GAME_DATA)
             .then(data => this.game = (data ? JSON.parse(data) : undefined),
                 error => console.log('game read error', error));
-        // console.log('init', JSON.stringify(this.game));
-        // console.log('init', JSON.stringify(this.lifetimeStats));
         await this.storage.get(HISTORY_DATA)
             .then(data => this.lifetimeStats = (data ? JSON.parse(data) : this.lifetimeStats),
                 error => console.log('lifetime read error', error));
-        // console.log('init', JSON.stringify(this.lifetimeStats));
     }
 
+    /**
+     * replace current game state with new game state
+     */
     public resetGame() {
         this.game = { ...newGame };
         this.game.dice.forEach((die) => {
@@ -83,11 +88,12 @@ export class GameService {
         return this.storeGame();
     }
 
-    public clearGame() {
-        this.game = undefined;
-    }
-
-    public getScore (catName) {
+    /**
+     * calculate the score for the input category
+     * @param catName name of tapped category
+     * @returns score for selected scoring category
+     */
+    public getScore (catName): number {
         switch (catName) {
             case 'Ones':
                 return this.getPipsCount(1);
@@ -122,13 +128,20 @@ export class GameService {
         }
     }
 
-    public alreadyHas5Oak() {
+    /**
+     * @returns true if all 5 dice are the same AND the 5OAK has already been scored
+     */
+    public alreadyHas5Oak(): boolean {
         return this.game.category !== '5 Oak'
                 && this.getCat('5 Oak')
                 && this.getCat('5 Oak').score === OAK5_SCORE;
     }
 
+    /**
+     * process totals, start new turn (or end game), and store game state
+     */
     public async save() {
+        // count extra 5OAKs for bonus calculation
         if (this.alreadyHas5Oak() && this.getOAKScore(5)) {
             this.game.extraOak5Count ++;
         }
@@ -144,6 +157,9 @@ export class GameService {
         await this.storeGame();
     }
 
+    /**
+     * calculate and set subtotals and total
+     */
     public async calcTotals() {
         this.game.subtotalLeft = this.game.categories.slice(0, 6)
             .reduce((total, cat) => total + (cat.score || 0), 0);
@@ -160,14 +176,21 @@ export class GameService {
                 + (this.game.extraOak5Count * OAK5_SCORE);
     }
 
+    /**
+     * remove score from selected category (not saved yet)
+     */
     public clearSelectedCategory() {
         if (this.game.category) {
-            this.setCatScore(this.game.category, undefined);
-            this.game.category = undefined;
+            this.setCatScore(this.game.category, undefined);  // blank out score in category
+            this.game.category = undefined;                          // clear selected category name
         }
     }
 
-    public setSelectedCategory(catName) {
+    /**
+     * set score for category tapped by user
+     * @param catName name of scoring category to check and score
+     */
+    public setSelectedCategory(catName): number {
         let points = 0;
         if (catName !== 'Bonus'
                 && catName !== this.game.category
@@ -183,6 +206,9 @@ export class GameService {
         return points;
     }
 
+    /**
+     * calculate and update user stats
+     */
     async gameOver() {
         this.lifetimeStats.lastGame = this.game.total;
         if (this.game.total > this.lifetimeStats.highScore) {
@@ -196,11 +222,9 @@ export class GameService {
         this.game.playing = false;
 
         return await this.storage.set(HISTORY_DATA, JSON.stringify(this.lifetimeStats));
-        // this.clearGame();
     }
 
     async storeGame() {
-        // console.log('stored');
         return await this.storage.set(GAME_DATA, JSON.stringify(this.game));
     }
 
@@ -212,12 +236,25 @@ export class GameService {
         return catName ? this.game.categories.find(c => c.name === catName) : catName;
     }
 
-    getOAKScore(howManyOAK) {
+    /**
+     * get "of a kind" score
+     * returns sum of dice if input count of matching dice is met
+     * when dice are {5,5,5,5,1}, returns 21 for howManyOAK(3) or howManyOAK(4)
+     * when dice are {5,5,4,4,2}, returns 0 for howManyOAK(3) or howManyOAK(4)
+     *
+     * @param howManyOAK number of highest recurring pip value
+     * @returns number true if there are at least howManyOAK of a pip value
+     */
+    getOAKScore(howManyOAK): number {
         const mode = this.getMode(this.game.dice);
         return (this.getPipsCount(mode) >= howManyOAK ? this.getDiceTotal() : 0);
     }
 
-    get23OAKScore() {
+    /**
+     * return 25 if dice make a full house
+     * @returns number 0 if no full house, 25 if dice make a full house
+     */
+    get23OAKScore(): number {
         const value = 25;
         if (this.getOAKScore(5) > 0) { return value; }
         if (this.getOAKScore(3) === 0) { return 0; }
@@ -226,7 +263,11 @@ export class GameService {
         return notMode.length === 2 && notMode[0].pips === notMode[1].pips ? value : 0;
     }
 
-    get4StraightScore() {
+    /**
+     * return 30 if dice include 4 in a row
+     * @returns number 0 if less than 4 in a row, 30 if 4 or more in a row
+     */
+    get4StraightScore(): number {
         let value = 30;
         let sorted = this.game.dice.concat().sort((a, b) => a.pips - b.pips);
         sorted = sorted.reduce((accumulator, current) => {
@@ -251,7 +292,11 @@ export class GameService {
         return value;
     }
 
-    get5StraightScore() {
+    /**
+     * return 40 if dice include 5 in a row
+     * @returns number 0 if not 5 in a row, 40 if 5 in a row
+     */
+    get5StraightScore(): number {
         const value = 40;
         const sorted = this.game.dice.concat().sort((a, b) => a.pips - b.pips);
         return sorted[0].pips + 1 === sorted[1].pips
@@ -261,17 +306,30 @@ export class GameService {
             ? value : 0;
     }
 
-    getMode(myArray) {
-        return myArray.reduce((a, b, i, arr) =>
+    /**
+     * find the highest occurring die value
+     * @param myArray array of dice { pips: number on dice }
+     * @returns number on dice of highest mode
+     */
+    getMode(myArray): number {
+        return myArray.reduce((a: number, b: any, i: number, arr: any[]) =>
                 (arr.filter(v => v.pips === a).length >= arr.filter(v => v.pips === b.pips).length ? a : b.pips),
             null);
     }
 
-    getDiceTotal() {
+    /**
+     * sum the pips on all of the dice
+     */
+    getDiceTotal(): number {
         return this.game.dice.reduce((total, die) => total + (die.pips || 0), 0);
     }
 
-    getPipsCount(pips) {
+    /**
+     * how many dice have the input value
+     * @param pips number on dice to count
+     * @returns count of dice (0-5) having input value
+     */
+    getPipsCount(pips): number {
         return this.game.dice.filter(die => (die.pips === pips)).length;
     }
 

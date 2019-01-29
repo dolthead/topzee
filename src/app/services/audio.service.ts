@@ -31,12 +31,10 @@ export class AudioService {
             if (this.isNative && !this.forceWebAudio) {
                 this.platform.ready()
                     .then(() => this.nativeAudio.preloadSimple(key, asset));
-                // this.nativeAudio.preloadComplex(key, asset, 1, 1, 0);
                 this.sounds.push({
                     key: key,
                     asset: asset
                 });
-                // console.log('preload', key, 'isNative:', this.isNative);
             } else {
                 const audio = new Audio();
                 audio.src = asset;
@@ -44,28 +42,24 @@ export class AudioService {
                     key: key,
                     asset: asset
                 });
-                // console.log('preload', key, 'isNative:', this.isNative);
             }
         }
     }
 
     play(key: string): void {
 
-        // console.log('sounds', JSON.stringify(this.sounds));
         const soundToPlay: Sound = this.sounds.find((sound) => sound.key === key);
         if (soundToPlay) {
             if (this.isNative) {
                 this.platform.ready()
                     .then(() => this.nativeAudio.play(soundToPlay.key)
-                        .then((res) => {
-                            console.log(res);
-                        }, (err) => {
-                            console.log('play error', JSON.stringify(soundToPlay), err);
-                        }));
+                        .then((res) => console.log(res),
+                            (err) => console.log('play error', JSON.stringify(soundToPlay), err))
+                    );
             } else {
                 this.audioPlayer.src = soundToPlay.asset;
                 this.audioPlayer.play()
-                    .catch(() => {});
+                    .catch(() => {}); // ignore web player errors
             }
         }
 

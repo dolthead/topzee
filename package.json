@@ -12,7 +12,7 @@
     "e2e": "ng e2e",
     "ios": "ionic cordova run ios --device -- --buildFlag=\"-UseModernBuildSystem=0\"",
     "web": "ionic cordova build browser --prod",
-    "android": "ionic cordova run android --device"
+    "android": "export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/ && export PATH=$JAVA_HOME/bin/:$PATH && ionic cordova run android --device"
   },
   "private": true,
   "dependencies": {
@@ -95,9 +95,9 @@
       "cordova-allow-background-audio": {}
     },
     "platforms": [
-      "browser",
       "ios",
-      "android"
+      "android",
+      "browser"
     ]
   }
 }
