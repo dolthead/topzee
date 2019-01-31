@@ -12,6 +12,8 @@ import {IonicStorageModule} from '@ionic/storage';
 import {NativeAudio} from '@ionic-native/native-audio/ngx';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Vibration} from '@ionic-native/vibration/ngx';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
     declarations: [AppComponent],
@@ -24,7 +26,8 @@ import {Vibration} from '@ionic-native/vibration/ngx';
             name: '__topzee',
             driverOrder: ['indexeddb', 'sqlite', 'websql']
         }),
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
     ],
     providers: [
         StatusBar,
