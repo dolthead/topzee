@@ -14,7 +14,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Vibration} from '@ionic-native/vibration/ngx';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { AngularFireModule } from '@angular/fire';
+import {AngularFireModule} from '@angular/fire';
 import { firebaseConfig } from './firebaseConfig';
 import { AngularFireAuth } from '@angular/fire/auth';
 

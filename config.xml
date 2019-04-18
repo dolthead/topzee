@@ -19,6 +19,7 @@
     <preference name="FadeSplashScreenDuration" value="300" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="SplashScreenDelay" value="2000" />
+    <preference name="AndroidLaunchMode" value="singleTask" />
     <platform name="android">
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
@@ -77,6 +78,12 @@
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
     </platform>
     <preference name="SplashScreen" value="screen" />
+    <universal-links>
+        <host name="com.simplybest.topzee" scheme="https" />
+        <host name="topzee-35340.firebaseapp.com" scheme="https">
+            <path url="/__/auth/callback" />
+        </host>
+    </universal-links>
     <engine name="android" spec="7.1.4" />
     <engine name="ios" spec="4.5.5" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
@@ -91,4 +98,11 @@
     <plugin name="cordova-plugin-screen-orientation" spec="3.0.1" />
     <plugin name="cordova-plugin-vibration" spec="3.1.0" />
     <plugin name="cordova-allow-background-audio" spec="1.0.2" />
+    <plugin name="cordova-plugin-buildinfo" spec="^2.0.2" />
+    <plugin name="cordova-universal-links-plugin" spec="~1.2.1" />
+    <plugin name="cordova-plugin-browsertab" spec="^0.2.0" />
+    <plugin name="cordova-plugin-customurlscheme" spec="^4.4.0">
+        <variable name="URL_SCHEME" value="com.simplybest.topzee" />
+    </plugin>
+    <plugin name="cordova-plugin-firebase-authentication" spec="^1.1.2" />
 </widget>
