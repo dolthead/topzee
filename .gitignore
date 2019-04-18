@@ -39,3 +39,5 @@ resources/android/
 *.apk
 localnotes.txt
 *.pdf
+
+firebaseConfig.ts

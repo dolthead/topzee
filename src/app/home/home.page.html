@@ -45,4 +45,16 @@
         Restart Game
     </ion-button>
 
+    <div *ngIf="afAuth.user | async as user; else showLogin" class="ion-text-center">
+        <ion-avatar style="margin:auto"><ion-img [src]="user.photoURL"></ion-img></ion-avatar>
+        <div>Hello {{ user.displayName }}!</div>
+        <ion-button expand="block" (click)="logout()" color="light" fill="solid">Logout</ion-button>
+    </div>
+    <ng-template #showLogin>
+        <ion-button expand="block" (click)="login()">
+            <ion-icon slot="start" name="logo-google" color="success"></ion-icon>
+            Login with Google
+        </ion-button>
+    </ng-template>
+
 </ion-content>

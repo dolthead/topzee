@@ -2,6 +2,8 @@ import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 import {GameService} from '../services/game.service';
 import {AudioService} from '../services/audio.service';
+import {AngularFireAuth} from '@angular/fire/auth';
+import { auth } from 'firebase/app';
 
 @Component({
     selector: 'app-home',
@@ -12,7 +14,8 @@ export class HomePage {
 
     constructor(private router: Router,
                 public gameService: GameService,
-                public audio: AudioService) {
+                public audio: AudioService,
+                public afAuth: AngularFireAuth) {
     }
 
     ionViewDidEnter() {
@@ -37,5 +40,14 @@ export class HomePage {
     goToGame = function() {
         this.router.navigateByUrl('/GameScreen');
     };
+
+
+    login() {
+        this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
+    }
+
+    logout() {
+        this.afAuth.auth.signOut();
+    }
 
 }

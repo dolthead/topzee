@@ -14,6 +14,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Vibration} from '@ionic-native/vibration/ngx';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { AngularFireModule } from '@angular/fire';
+import { firebaseConfig } from './firebaseConfig';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @NgModule({
     declarations: [AppComponent],
@@ -27,14 +30,16 @@ import { environment } from '../environments/environment';
             driverOrder: ['indexeddb', 'sqlite', 'websql']
         }),
         BrowserAnimationsModule,
-        ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+        ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+        AngularFireModule.initializeApp(firebaseConfig),
     ],
     providers: [
         StatusBar,
         SplashScreen,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         NativeAudio,
-        Vibration
+        Vibration,
+        AngularFireAuth,
     ],
     bootstrap: [AppComponent]
 })
