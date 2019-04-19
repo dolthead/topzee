@@ -2,10 +2,13 @@ import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 import {GameService} from '../services/game.service';
 import {AudioService} from '../services/audio.service';
-import {AngularFireAuth} from '@angular/fire/auth';
-import { auth } from 'firebase/app';
+// import {AngularFireAuth} from '@angular/fire/auth';
+// import { auth } from 'firebase/app';
 import {Platform} from '@ionic/angular';
-import {FirebaseAuth} from '@angular/fire';
+// import {FirebaseAuth} from '@angular/fire';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { auth } from 'firebase/app';
+import AuthProvider = firebase.auth.AuthProvider;
 
 @Component({
     selector: 'app-home',
@@ -14,7 +17,7 @@ import {FirebaseAuth} from '@angular/fire';
 })
 export class HomePage {
 
-    public fireAuth: FirebaseAuth;
+    // public fireAuth: FirebaseAuth;
     private user;
 
     constructor(private router: Router,
@@ -55,22 +58,23 @@ export class HomePage {
         // mobile device login
         const provider = new auth.GoogleAuthProvider();
         if (this.platform.is('cordova')) {
-            this.fireAuth.signInWithRedirect(provider)
+            console.log('cordova');
+            return this.afAuth.auth.signInWithRedirect(provider)
                 .then(() => {
-                    return this.fireAuth.getRedirectResult()
-                        .then(result => {
+                    return this.afAuth.auth.getRedirectResult().then( result => {
                         // This gives you a Google Access Token.
                         // You can use it to access the Google API.
-                        // const token = result.credential.accessToken;
+                        // let token = result.credential.accessToken;
                         // The signed-in user info.
-                        // const user = result.user;
+                        // let user = result.user;
                         // console.log(token, user);
-                        }).catch(function (error) {
-                            // Handle Errors here.
-                            console.error(error.message);
-                        });
+                    }).catch(function(error) {
+                        // Handle Errors here.
+                        alert(error.message);
+                    });
                 });
         } else { // web login
+            console.log('web');
             return this.afAuth.auth
                 .signInWithPopup(provider)
                 .then(res => console.log(res));

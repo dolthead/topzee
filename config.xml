@@ -11,6 +11,8 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <allow-navigation href="https://*" />
+    <allow-navigation href="http://*" />
     <preference name="orientation" value="portrait" />
     <preference name="ScrollEnabled" value="false" />
     <preference name="android-minSdkVersion" value="19" />
@@ -79,7 +81,7 @@
     </platform>
     <preference name="SplashScreen" value="screen" />
     <universal-links>
-        <host name="com.simplybest.topzee" scheme="https" />
+        <host name="topzee.page.link" scheme="https" />
         <host name="topzee-35340.firebaseapp.com" scheme="https">
             <path url="/__/auth/callback" />
         </host>
@@ -101,8 +103,9 @@
     <plugin name="cordova-plugin-buildinfo" spec="^2.0.2" />
     <plugin name="cordova-universal-links-plugin" spec="~1.2.1" />
     <plugin name="cordova-plugin-browsertab" spec="^0.2.0" />
+    <plugin name="cordova-plugin-firebase-authentication" spec="^1.1.2" />
+    <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
     <plugin name="cordova-plugin-customurlscheme" spec="^4.4.0">
         <variable name="URL_SCHEME" value="com.simplybest.topzee" />
     </plugin>
-    <plugin name="cordova-plugin-firebase-authentication" spec="^1.1.2" />
 </widget>
