@@ -39,3 +39,4 @@ resources/android/
 *.apk
 localnotes.txt
 *.pdf
+src/app/firebaseConfig.ts
