@@ -11,6 +11,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "ios": "ionic cordova run ios --device -- --buildFlag=\"-UseModernBuildSystem=0\"",
+    "iosem": "cordova emulate ios --debug --target \"iPhone-8,com.apple.CoreSimulator.SimRuntime.iOS-12-2\" --buildFlag=\"-UseModernBuildSystem=0\"",
     "web-old": "ionic cordova build browser --prod",
     "web": "ionic build --prod",
     "android": "export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/ && export PATH=$JAVA_HOME/bin/:$PATH && ionic cordova run android --device"
@@ -56,7 +57,7 @@
   },
   "devDependencies": {
     "@angular-devkit/architect": "^0.11.2",
-    "@angular-devkit/build-angular": "^0.13.9",
+    "@angular-devkit/build-angular": "^0.13.8",
     "@angular-devkit/core": "^7.1.2",
     "@angular-devkit/schematics": "^7.1.2",
     "@angular/cli": "^7.3.8",

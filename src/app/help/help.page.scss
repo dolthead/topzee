@@ -11,3 +11,18 @@
 ion-col {
     padding-bottom: 0;
 }
+
+ion-img {
+    height: 8vw;
+}
+
+div.dice-row {
+    display: flex;
+    flex-grow: initial;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    white-space: nowrap;
+    align-items: center;
+
+    margin: 0 -5px;
+}
