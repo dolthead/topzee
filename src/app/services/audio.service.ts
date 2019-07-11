@@ -46,9 +46,9 @@ export class AudioService {
         }
     }
 
-    play(key: string): void {
-
+    play(key: string): boolean {
         const soundToPlay: Sound = this.sounds.find((sound) => sound.key === key);
+
         if (soundToPlay) {
             if (this.isNative) {
                 this.platform.ready()
@@ -61,8 +61,14 @@ export class AudioService {
                 this.audioPlayer.play()
                     .catch(() => {}); // ignore web player errors
             }
+            return true;
+        } else {
+            return false;
         }
+    }
 
+    getSounds() {
+        return this.sounds;
     }
 
 }

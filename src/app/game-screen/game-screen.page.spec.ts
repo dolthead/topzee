@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GameScreenPage } from './game-screen.page';
 
-describe('GameScreenPage', () => {
+xdescribe('GameScreenPage', () => {
   let component: GameScreenPage;
   let fixture: ComponentFixture<GameScreenPage>;
 
@@ -21,7 +21,7 @@ describe('GameScreenPage', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  xit('should create', () => {
     expect(component).toBeTruthy();
   });
 });
