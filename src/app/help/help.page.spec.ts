@@ -5,7 +5,7 @@ import { HelpPage } from './help.page';
 import {AngularDelegate, ModalController, Platform} from '@ionic/angular';
 
 describe('HelpPage', () => {
-  
+
   let component: HelpPage;
   let fixture: ComponentFixture<HelpPage>;
 
