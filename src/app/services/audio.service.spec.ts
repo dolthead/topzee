@@ -5,7 +5,7 @@ import {Platform} from '@ionic/angular';
 import {NativeAudio} from '@ionic-native/native-audio/ngx';
 
 describe('AudioService', () => {
-  
+
   beforeEach(() => TestBed.configureTestingModule({
     providers: [
         Platform,

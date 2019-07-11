@@ -10,7 +10,7 @@ import {AudioService} from '../services/audio.service';
 })
 export class HomePage {
 
-    constructor(private router: Router,
+    constructor(public router: Router,
                 public gameService: GameService,
                 public audio: AudioService) {
     }

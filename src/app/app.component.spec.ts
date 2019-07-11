@@ -1,17 +1,11 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed, async } from '@angular/core/testing';
 
-import {IonicModule, Platform} from '@ionic/angular';
+import {Platform} from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
-import {BrowserModule} from '@angular/platform-browser';
-import {AppRoutingModule} from './app-routing.module';
-import {IonicStorageModule, Storage} from '@ionic/storage';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {ServiceWorkerModule} from '@angular/service-worker';
-import {environment} from '../environments/environment';
 
 describe('AppComponent', () => {
 
@@ -31,17 +25,6 @@ describe('AppComponent', () => {
         { provide: SplashScreen, useValue: splashScreenSpy },
         { provide: Platform, useValue: platformSpy },
       ],
-      imports: [
-        // BrowserModule,
-        // IonicModule.forRoot(),
-        // AppRoutingModule,
-        // IonicStorageModule.forRoot({
-        //   name: '__topzee',
-        //   driverOrder: ['indexeddb', 'sqlite', 'websql']
-        // }),
-        // BrowserAnimationsModule,
-        // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
-      ]
     }).compileComponents();
   }));
 
