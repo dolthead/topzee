@@ -5,12 +5,10 @@ import { Die } from '../models/die.model';
 import { GameStats } from '../models/gameStats.model';
 import { CategoryService } from './category.service';
 import { DiceService } from './dice.service';
+import { ScoringService } from './scoring.service';
 
 const GAME_DATA = 'GAME_DATA'; // local storage key for current game state
 const HISTORY_DATA = 'HISTORY_DATA'; // local storage key for user stats
-const MIN_FOR_BONUS = 60;
-const BONUS = 50;
-const OAK5_SCORE = 50;
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +26,8 @@ export class GameService {
   constructor(
     public storage: Storage,
     public categoryService: CategoryService,
-    public diceService: DiceService
+    public diceService: DiceService,
+    public scoringService: ScoringService
   ) {
     this.loadData();
   }
@@ -43,7 +42,7 @@ export class GameService {
         data => (this.game = data ? <Game>JSON.parse(data) : undefined),
         error => console.log("game read error", error)
       );
-    await this.storage
+    return await this.storage
       .get(HISTORY_DATA)
       .then(
         data =>
@@ -52,12 +51,12 @@ export class GameService {
       );
   }
 
-  newGame():Game {
+  newGame(): Game {
       return <Game>{
         playing: true,
         turnsLeft: 13,
         rollsLeft: 3,
-        dice: <[Die]>this.diceService.newDice(),
+        dice: this.diceService.newDice(),
         category: undefined, // where to put the score, selected by user
         categories: this.categoryService.newCategories(),
         subtotalLeft: 0,
@@ -81,53 +80,13 @@ export class GameService {
   }
 
   /**
-   * calculate the score for the input category
-   * @param catName name of tapped category
-   * @returns score for selected scoring category
-   */
-  public getScore(catName): number {
-    switch (catName) {
-      case "Ones":
-        return this.getPipsCount(1);
-      case "Twos":
-        return this.getPipsCount(2) * 2;
-      case "Threes":
-        return this.getPipsCount(3) * 3;
-      case "Fours":
-        return this.getPipsCount(4) * 4;
-      case "Fives":
-        return this.getPipsCount(5) * 5;
-      case "Sixes":
-        return this.getPipsCount(6) * 6;
-
-      case "3 Oak":
-        return this.getOAKScore(3);
-      case "4 Oak":
-        return this.getOAKScore(4);
-      case "Full House":
-        return this.get23OAKScore();
-      case "4 Straight":
-        return this.get4StraightScore();
-      case "5 Straight":
-        return this.get5StraightScore();
-      case "5 Oak":
-        return this.getOAKScore(5) > 0 ? OAK5_SCORE : 0;
-      case "Any":
-        return this.getDiceTotal();
-
-      default:
-        return 0;
-    }
-  }
-
-  /**
    * @returns true if all 5 dice are the same AND the 5OAK has already been scored
    */
   public alreadyHas5Oak(): boolean {
     return (
       this.game.category !== "5 Oak" &&
       this.getCat("5 Oak") &&
-      this.getCat("5 Oak").score === OAK5_SCORE
+      this.getCat("5 Oak").score === this.scoringService.OAK5_SCORE
     );
   }
 
@@ -136,32 +95,32 @@ export class GameService {
    */
   public async save() {
     // count extra 5OAKs for bonus calculation
-    if (this.alreadyHas5Oak() && this.getOAKScore(5)) {
+    if (this.alreadyHas5Oak() && this.scoringService.getOAKScore(this.game.dice, 5)) {
       this.game.extraOak5Count++;
     }
     this.game.category = undefined;
     await this.calcTotals();
 
     this.game.rollsLeft = 3;
-    this.game.dice = <[Die]>this.diceService.newDice();
+    this.game.dice = this.diceService.newDice();
     this.game.turnsLeft--;
     if (!this.game.turnsLeft) {
       this.gameOver();
     }
-    await this.storeGame();
+    return await this.storeGame();
   }
 
   /**
    * calculate and set subtotals and total
    */
-  public async calcTotals() {
+  public calcTotals() {
     this.game.subtotalLeft = this.game.categories
       .slice(0, 6)
       .reduce((total, cat) => total + (cat.score || 0), 0);
     const bonus = this.game.categories.find(cat => cat.name === "Bonus");
-    if (this.game.subtotalLeft >= MIN_FOR_BONUS) {
-      bonus.score = BONUS;
-      this.game.subtotalLeft += BONUS;
+    if (this.game.subtotalLeft >= this.scoringService.MIN_FOR_BONUS) {
+      bonus.score = this.scoringService.BONUS;
+      this.game.subtotalLeft += this.scoringService.BONUS;
     }
 
     this.game.subtotalRight = this.game.categories
@@ -171,7 +130,7 @@ export class GameService {
     this.game.total =
       this.game.subtotalLeft +
       this.game.subtotalRight +
-      this.game.extraOak5Count * OAK5_SCORE;
+      this.game.extraOak5Count * this.scoringService.OAK5_SCORE;
   }
 
   /**
@@ -199,7 +158,7 @@ export class GameService {
       this.clearSelectedCategory();
       if (cat.score === undefined) {
         this.game.category = catName;
-        points = this.getScore(catName);
+        points = this.scoringService.getScore(this.game.dice, catName);
         this.setCatScore(catName, points);
       }
     }
@@ -242,117 +201,4 @@ export class GameService {
       : catName;
   }
 
-  /**
-   * get "of a kind" score
-   * returns sum of dice if input count of matching dice is met
-   * when dice are {5,5,5,5,1}, returns 21 for howManyOAK(3) or howManyOAK(4)
-   * when dice are {5,5,4,4,2}, returns 0 for howManyOAK(3) or howManyOAK(4)
-   *
-   * @param howManyOAK number of highest recurring pip value
-   * @returns number true if there are at least howManyOAK of a pip value
-   */
-  getOAKScore(howManyOAK): number {
-    const mode = this.getMode(this.game.dice);
-    return this.getPipsCount(mode) >= howManyOAK ? this.getDiceTotal() : 0;
-  }
-
-  /**
-   * return 25 if dice make a full house
-   * @returns number 0 if no full house, 25 if dice make a full house
-   */
-  get23OAKScore(): number {
-    const value = 25;
-    if (this.getOAKScore(5) > 0) {
-      return value;
-    }
-    if (this.getOAKScore(3) === 0) {
-      return 0;
-    }
-    const mode = this.getMode(this.game.dice);
-    const notMode = this.game.dice.filter(die => die.pips !== mode);
-    return notMode.length === 2 && notMode[0].pips === notMode[1].pips
-      ? value
-      : 0;
-  }
-
-  /**
-   * return 30 if dice include 4 in a row
-   * @returns number 0 if less than 4 in a row, 30 if 4 or more in a row
-   */
-  get4StraightScore(): number {
-    let value = 30;
-    let sorted = [...this.game.dice].sort((a, b) => a.pips - b.pips);
-    sorted = sorted.reduce((accumulator, current) => {
-      const length = accumulator.length;
-      if (length === 0 || accumulator[length - 1].pips !== current.pips) {
-        accumulator.push(current);
-      }
-      return accumulator;
-    }, []);
-    if (sorted.length < 4) {
-      // four unique numbers is required
-      return 0;
-    } else if (sorted.length === 5) {
-      if (sorted[0].pips + 1 !== sorted[1].pips) {
-        // if gap is at start, remove first item (1, 3, 4, 5, 6)
-        sorted.shift();
-      } else {
-        sorted.pop();
-      }
-    }
-    sorted.forEach((die, d, thisArray) => {
-      // see if first 3 have their successor successing
-      if (d < 3 && die.pips + 1 !== thisArray[d + 1].pips) {
-        value = 0;
-      }
-    });
-    return value;
-  }
-
-  /**
-   * return 40 if dice include 5 in a row
-   * @returns number 0 if not 5 in a row, 40 if 5 in a row
-   */
-  get5StraightScore(): number {
-    const value = 40;
-    const sorted = [...this.game.dice].sort((a, b) => a.pips - b.pips);
-    return sorted[0].pips + 1 === sorted[1].pips &&
-      sorted[1].pips + 1 === sorted[2].pips &&
-      sorted[2].pips + 1 === sorted[3].pips &&
-      sorted[3].pips + 1 === sorted[4].pips
-      ? value
-      : 0;
-  }
-
-  /**
-   * find the highest occurring die value
-   * @param myArray array of dice { pips: number on dice }
-   * @returns number on dice of highest mode
-   */
-  getMode(myArray): number {
-    return myArray.reduce(
-      (a: number, b: any, i: number, arr: any[]) =>
-        arr.filter(v => v.pips === a).length >=
-        arr.filter(v => v.pips === b.pips).length
-          ? a
-          : b.pips,
-      null
-    );
-  }
-
-  /**
-   * sum the pips on all of the dice
-   */
-  getDiceTotal(): number {
-    return this.game.dice.reduce((total, die) => total + (die.pips || 0), 0);
-  }
-
-  /**
-   * how many dice have the input value
-   * @param pips number on dice to count
-   * @returns count of dice (0-5) having input value
-   */
-  getPipsCount(pips): number {
-    return this.game.dice.filter(die => die.pips === pips).length;
-  }
 }

@@ -4,7 +4,7 @@ export interface Game {
     playing: Boolean;
     turnsLeft: number;
     rollsLeft: number;
-    dice: [Die];
+    dice: Die[];
     category: undefined;
     categories: any;
     subtotalLeft: number;

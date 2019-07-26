@@ -7,7 +7,7 @@ import { Die } from '../models/die.model';
 export class DiceService {
   constructor() {}
 
-  newDice = () => [
+  newDice = (): Die[] => [
       <Die>{ pips: 0, locked: false },
       <Die>{ pips: 0, locked: false },
       <Die>{ pips: 0, locked: false },

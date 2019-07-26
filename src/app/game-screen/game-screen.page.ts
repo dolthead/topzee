@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {GameService} from '../services/game.service';
+import {ScoringService} from '../services/scoring.service';
 import {Router} from '@angular/router';
 import {AlertController, ModalController} from '@ionic/angular';
 import {AudioService} from '../services/audio.service';
@@ -35,6 +36,7 @@ export class GameScreenPage {
 
     constructor(private router: Router,
                 public gameService: GameService,
+                public scoringService: ScoringService,
                 public alertController: AlertController,
                 public audio: AudioService,
                 private modalController: ModalController,
@@ -83,7 +85,7 @@ export class GameScreenPage {
                             this.audio.play(`roll${ Math.floor(Math.random() * 3) }`);
                             die.pips = Math.ceil(Math.random() * 6);
                             this.gameService.storeGame();
-                            if (this.gameService.getOAKScore(5)) {
+                            if (this.scoringService.getOAKScore(this.gameService.game.dice, 5)) {
                                 this.audio.play('oak5');
                                 this.vibration.vibrate(500);
                             }
