@@ -50,5 +50,5 @@ describe('GameScreenPage', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
-    
+
 });
