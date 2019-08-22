@@ -45,8 +45,7 @@ export class GameService {
     return await this.storage
       .get(HISTORY_DATA)
       .then(
-        data =>
-          (this.lifetimeStats = data ? JSON.parse(data) : this.lifetimeStats),
+        data => (this.lifetimeStats = data ? JSON.parse(data) : this.lifetimeStats),
         error => console.log("lifetime read error", error)
       );
   }
