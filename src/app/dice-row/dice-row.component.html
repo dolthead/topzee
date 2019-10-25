@@ -1,0 +1,6 @@
+<div class="dice-row">
+  <template *ngFor="let d of diceValues">
+    <ion-img [src]="'/assets/svg/die${d}.svg'"></ion-img>
+    <span>= {{ points }} points</span>
+  </template>
+</div>

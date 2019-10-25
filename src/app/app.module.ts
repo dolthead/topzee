@@ -14,9 +14,10 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Vibration} from '@ionic-native/vibration/ngx';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { DiceRowComponent } from './dice-row/dice-row.component';
 
 @NgModule({
-    declarations: [AppComponent],
+    declarations: [AppComponent, DiceRowComponent],
     entryComponents: [],
     imports: [
         BrowserModule,

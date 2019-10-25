@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.simplybest.topzee" version="0.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.simplybest.games.topzee" version="0.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Topzee</name>
     <description>Poker dice clone</description>
     <author email="topzee@simplybest.com" href="http://simplybest.com/topzee/">simply best apps</author>
@@ -78,7 +78,7 @@
     </platform>
     <preference name="SplashScreen" value="screen" />
     <engine name="android" spec="7.1.4" />
-    <engine name="ios" spec="4.5.5" />
+    <engine name="ios" spec="^4.5.5" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
     <plugin name="cordova-plugin-device" spec="^2.0.2" />

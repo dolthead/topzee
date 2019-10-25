@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { HelpPage } from './help.page';
+import { DiceRowComponent } from '../dice-row/dice-row.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
+    DiceRowComponent,
     CommonModule,
     FormsModule,
     IonicModule,

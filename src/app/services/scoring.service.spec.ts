@@ -1,17 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 
 import { ScoringService } from './scoring.service';
+import { DiceService } from './dice.service';
 import { Die } from '../models/die.model';
 
-const getDice = ([d1, d2, d3, d4, d5]: number[]): Die[] => {
-  return [
-    { pips: d1, locked: false },
-    { pips: d2, locked: false },
-    { pips: d3, locked: false },
-    { pips: d4, locked: false },
-    { pips: d5, locked: false },
-  ];
-};
+const getDice = ([d1, d2, d3, d4, d5]: number[]): Die[] => [
+  { pips: d1, locked: false },
+  { pips: d2, locked: false },
+  { pips: d3, locked: false },
+  { pips: d4, locked: false },
+  { pips: d5, locked: false },
+];
 
 describe('ScoringService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
