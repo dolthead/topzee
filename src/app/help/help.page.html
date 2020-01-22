@@ -1,103 +1,234 @@
 <ion-header>
-    <ion-toolbar color="primary">
-        <ion-title>Scoring</ion-title>
-    </ion-toolbar>
+  <ion-toolbar color="primary">
+    <ion-title>Scoring</ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-card top-card>
+    <ion-card-content top-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="3">Rules</ion-col>
+          <ion-col>
+            Roll the dice. Tap the dice you want to keep, and roll again. After
+            3 rolls, your turn is over. Tap a category on the scoresheet, and
+            tap the SAVE button. You can score each category only once. After 13
+            turns, the game is over and your score is saved.
+          </ion-col>
+        </ion-row>
 
-    <ion-card top-card>
-        <ion-card-content top-content>
+        <ion-row padding-top>
+          <ion-col size="3">Ones</ion-col>
+          <ion-col>
+            <div>The sum of the dice with one pip</div>
+            <div class="dice-row">
+              <ion-img src="/assets/svg/die5.svg"></ion-img>
+              <ion-img src="/assets/svg/die1.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die1.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die3.svg"></ion-img>
+              <ion-img src="/assets/svg/die1.svg" locked></ion-img>
+              <span>= 3 points</span>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="3">Twos</ion-col>
+          <ion-col>
+            <div>The sum of the dice with two pips</div>
+            <div class="dice-row">
+              <ion-img src="/assets/svg/die2.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die2.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die2.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die4.svg"></ion-img>
+              <ion-img src="/assets/svg/die2.svg" locked></ion-img>
+              <span>= 8 points</span>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="3">Threes</ion-col>
+          <ion-col>
+            <div>The sum of the dice with three pips</div>
+            <div class="dice-row">
+              <ion-img src="/assets/svg/die3.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die3.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die2.svg"></ion-img>
+              <ion-img src="/assets/svg/die4.svg"></ion-img>
+              <ion-img src="/assets/svg/die6.svg"></ion-img>
+              <span>= 6 points</span>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="3">Fours</ion-col>
+          <ion-col>
+            <div>The sum of the dice with four pips</div>
+            <div class="dice-row">
+              <ion-img src="/assets/svg/die5.svg"></ion-img>
+              <ion-img src="/assets/svg/die3.svg"></ion-img>
+              <ion-img src="/assets/svg/die4.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die4.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die4.svg" locked></ion-img>
+              <span>= 12 points</span>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="3">Fives</ion-col>
+          <ion-col>
+            <div>The sum of the dice with five pips</div>
+            <div class="dice-row">
+              <ion-img src="/assets/svg/die5.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die6.svg"></ion-img>
+              <ion-img src="/assets/svg/die1.svg"></ion-img>
+              <ion-img src="/assets/svg/die5.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die5.svg" locked></ion-img>
+              <span>= 15 points</span>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="3">Sixes</ion-col>
+          <ion-col>
+            <div>The sum of the dice with six pips</div>
+            <div class="dice-row">
+              <ion-img src="/assets/svg/die5.svg"></ion-img>
+              <ion-img src="/assets/svg/die1.svg"></ion-img>
+              <ion-img src="/assets/svg/die2.svg"></ion-img>
+              <ion-img src="/assets/svg/die4.svg"></ion-img>
+              <ion-img src="/assets/svg/die6.svg" locked></ion-img>
+              <span>= 6 points</span>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="3">Bonus</ion-col>
+          <ion-col
+            >Get at least 60 points in the sections above - 50 point
+            bonus</ion-col
+          >
+        </ion-row>
 
-            <ion-grid>
+        <ion-row padding-top>
+          <ion-col size="3"></ion-col>
+          <ion-col>Oak = "Of A Kind"</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="3">3 Oak</ion-col>
+          <ion-col>
+            <div>
+              3 of a kind - the sum of <b>all</b> the dice, if there are at
+              least 3 of the same number
+            </div>
+            <div class="dice-row">
+              <ion-img src="/assets/svg/die5.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die1.svg"></ion-img>
+              <ion-img src="/assets/svg/die5.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die5.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die6.svg"></ion-img>
+              <span>= 22 points</span>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="3">4 Oak</ion-col>
+          <ion-col
+            ><div>
+              4 of a kind - the sum of all the dice, if there are at least 4 of
+              the same number
+            </div>
+            <div class="dice-row">
+              <ion-img src="/assets/svg/die5.svg"></ion-img>
+              <ion-img src="/assets/svg/die2.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die2.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die2.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die2.svg" locked></ion-img>
+              <span>= 13 points</span>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="3">Full House</ion-col>
+          <ion-col>
+            <div>3 of a kind and a pair - 25 points</div>
+            <div class="dice-row">
+              <ion-img src="/assets/svg/die1.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die4.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die1.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die1.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die4.svg" locked></ion-img>
+              <span>= 25 points</span>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="3">4 Straight</ion-col>
+          <ion-col>
+            <div>4 numbers in a row - 30 points</div>
+            <div class="dice-row">
+              <ion-img src="/assets/svg/die5.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die1.svg"></ion-img>
+              <ion-img src="/assets/svg/die3.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die4.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die6.svg" locked></ion-img>
+              <span>= 30 points</span>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="3">5 Straight</ion-col>
+          <ion-col>
+            <div>5 numbers in a row - 40 points</div>
+            <div class="dice-row">
+              <ion-img src="/assets/svg/die4.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die1.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die5.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die2.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die3.svg" locked></ion-img>
+              <span>= 40 points</span>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="3">5 Oak</ion-col>
+          <ion-col>
+            <div>5 of a kind - 50 points!</div>
+            <div class="dice-row">
+              <ion-img src="/assets/svg/die3.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die3.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die3.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die3.svg" locked></ion-img>
+              <ion-img src="/assets/svg/die3.svg" locked></ion-img>
+              <span>= 50 points</span>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="3">Any</ion-col>
+          <ion-col>
+            <div>Any numbers on the dice - the sum of all the dice</div>
+            <div class="dice-row">
+              <ion-img src="/assets/svg/die4.svg"></ion-img>
+              <ion-img src="/assets/svg/die5.svg"></ion-img>
+              <ion-img src="/assets/svg/die5.svg"></ion-img>
+              <ion-img src="/assets/svg/die6.svg"></ion-img>
+              <ion-img src="/assets/svg/die4.svg"></ion-img>
+              <span>= 24 points</span>
+            </div>
+          </ion-col>
+        </ion-row>
 
-                <ion-row>
-                    <ion-col size="3">Ones</ion-col>
-                    <ion-col>
-                        <div>The sum of the dice with one pip</div>
-                        <div class="dice-row">
-                            <ion-img src="/assets/svg/die5.svg"></ion-img>
-                            <ion-img src="/assets/svg/die1.svg"></ion-img>
-                            <ion-img src="/assets/svg/die1.svg"></ion-img>
-                            <ion-img src="/assets/svg/die3.svg"></ion-img>
-                            <ion-img src="/assets/svg/die1.svg"></ion-img>
-                            <span>= 3 points</span>
-                        </div>
-                    </ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col size="3">Twos</ion-col>
-                    <ion-col>
-                        <div>The sum of the dice with two pips</div>
-                        <div class="dice-row">
-                            <ion-img src="/assets/svg/die2.svg"></ion-img>
-                            <ion-img src="/assets/svg/die2.svg"></ion-img>
-                            <ion-img src="/assets/svg/die2.svg"></ion-img>
-                            <ion-img src="/assets/svg/die4.svg"></ion-img>
-                            <ion-img src="/assets/svg/die2.svg"></ion-img>
-                            <span>= 8 points</span>
-                        </div>
-                    </ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col size="3">Threes</ion-col>
-                    <ion-col>The sum of the dice with three pips</ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col size="3">Fours</ion-col>
-                    <ion-col>The sum of the dice with four pips</ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col size="3">Fives</ion-col>
-                    <ion-col>The sum of the dice with five pips</ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col size="3">Sixes</ion-col>
-                    <ion-col>The sum of the dice with six pips</ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col size="3">Bonus</ion-col>
-                    <ion-col>Get at least 60 points in the sections above - 50 point bonus</ion-col>
-                </ion-row>
+        <ion-row padding-top>
+          <ion-col size="3">5 Oak Bonus</ion-col>
+          <ion-col>
+            If you get more than 1 "5 Oak", score it in another category, AND
+            you will receive a 50-point bonus!
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
 
-                <ion-row padding-top>
-                    <ion-col size="3">3 Oak</ion-col>
-                    <ion-col>3 of a kind - the sum of all the dice, if there are at least 3 of the same number</ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col size="3">4 Oak</ion-col>
-                    <ion-col>4 of a kind - the sum of all the dice, if there are at least 4 of the same number</ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col size="3">Full House</ion-col>
-                    <ion-col>3 of a kind and a pair - 25 points</ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col size="3">4 Straight</ion-col>
-                    <ion-col>4 numbers in a row - 30 points</ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col size="3">5 Straight</ion-col>
-                    <ion-col>5 numbers in a row - 40 points</ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col size="3">5 Oak</ion-col>
-                    <ion-col>5 of a kind - 50 points</ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col size="3">Any</ion-col>
-                    <ion-col>Any numbers on the dice - the sum of all the dice</ion-col>
-                </ion-row>
-
-                <ion-row padding-top>
-                    <ion-col size="3">5 Oak Bonus</ion-col>
-                    <ion-col>Any extra scores saved of 5 of a kind - 50 point bonus (added to the TOTAL)</ion-col>
-                </ion-row>
-
-            </ion-grid>
-        </ion-card-content>
-    </ion-card>
-
-    <ion-button float-right margin-end (click)="cancel()">Close</ion-button>
-
+  <ion-button float-right margin-end (click)="cancel()">Close</ion-button>
 </ion-content>
