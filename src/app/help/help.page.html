@@ -18,7 +18,7 @@
           </ion-col>
         </ion-row>
 
-        <ion-row padding-top>
+        <ion-row class="ion-padding-top">
           <ion-col size="3">Ones</ion-col>
           <ion-col>
             <div>The sum of the dice with one pip</div>
@@ -110,7 +110,7 @@
           >
         </ion-row>
 
-        <ion-row padding-top>
+        <ion-row class="ion-padding-top">
           <ion-col size="3"></ion-col>
           <ion-col>Oak = "Of A Kind"</ion-col>
         </ion-row>
@@ -219,7 +219,7 @@
           </ion-col>
         </ion-row>
 
-        <ion-row padding-top>
+        <ion-row class="ion-padding-top">
           <ion-col size="3">5 Oak Bonus</ion-col>
           <ion-col>
             If you get more than 1 "5 Oak", score it in another category, AND
@@ -230,5 +230,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-button float-right margin-end (click)="cancel()">Close</ion-button>
+  <ion-button class="ion-float-right ion-margin-end" (click)="cancel()"
+    >Close</ion-button
+  >
 </ion-content>
