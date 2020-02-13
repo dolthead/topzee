@@ -1,7 +1,7 @@
 {
   "name": "topzee",
   "integrations": {
-    "cordova": {}
+    "capacitor": {}
   },
   "type": "angular"
 }
