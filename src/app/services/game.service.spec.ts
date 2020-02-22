@@ -4,25 +4,19 @@ import { AngularDelegate, Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 
 describe('GameService', () => {
-  let mockStorage;
+    let mockStorage;
 
-  beforeEach(async(() => {
-    mockStorage = jasmine.createSpyObj(['get', 'set']);
-    TestBed.configureTestingModule({
-      providers: [
-        { provide: Storage, useValue: mockStorage },
-        Platform,
-        AngularDelegate
-      ]
-    }).compileComponents();
-  }));
+    beforeEach(async(() => {
+        mockStorage = jasmine.createSpyObj(['get', 'set']);
+        TestBed.configureTestingModule({
+            providers: [{ provide: Storage, useValue: mockStorage }, Platform, AngularDelegate],
+        }).compileComponents();
+    }));
 
-  beforeEach(() => {
-  });
+    beforeEach(() => {});
 
-  it('should be created', () => {
-    const service: GameService = TestBed.get(GameService);
-    expect(service).toBeTruthy();
-  });
-
+    it('should be created', () => {
+        const service: GameService = TestBed.get(GameService);
+        expect(service).toBeTruthy();
+    });
 });

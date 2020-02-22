@@ -2,16 +2,16 @@ import { Injectable } from '@angular/core';
 import { Die } from '../models/die.model';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root',
 })
 export class DiceService {
-  constructor() {}
+    constructor() {}
 
-  newDice = (): Die[] => [
-      <Die>{ pips: 0, locked: false },
-      <Die>{ pips: 0, locked: false },
-      <Die>{ pips: 0, locked: false },
-      <Die>{ pips: 0, locked: false },
-      <Die>{ pips: 0, locked: false }
+    newDice = (): Die[] => [
+        <Die>{ pips: 0, locked: false },
+        <Die>{ pips: 0, locked: false },
+        <Die>{ pips: 0, locked: false },
+        <Die>{ pips: 0, locked: false },
+        <Die>{ pips: 0, locked: false },
     ];
 }

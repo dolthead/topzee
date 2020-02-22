@@ -1,0 +1,36 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-title>about</ion-title>
+        <ion-buttons slot="end">
+            <ion-button slot="icon-only" (click)="cancel()">
+                <ion-icon name="close"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card top-card>
+        <ion-card-content top-content>
+            <ion-grid>
+                <ion-row>
+                    <ion-col size="3">Created by</ion-col>
+                    <ion-col>
+                        simplybest apps
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="3">Credits</ion-col>
+                    <ion-col>
+                        <div>
+                            <p>Sounds</p>
+                            <p>This sound - this author</p>
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-card-content>
+    </ion-card>
+
+    <ion-button class="ion-float-right ion-margin-end" (click)="cancel()">Close</ion-button>
+</ion-content>

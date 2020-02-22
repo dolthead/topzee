@@ -4,48 +4,54 @@
             <ion-back-button defaultHref="home"></ion-back-button>
         </ion-buttons>
         <ion-title>Topzee</ion-title>
-        <ion-buttons slot="end" (click)="showHelp()">
-            <ion-icon size="large" name="help-circle-outline"></ion-icon>
+        <ion-buttons slot="end">
+            <ion-button (click)="showHelp()">
+                <ion-icon size="large" name="help-circle-outline"></ion-icon>
+            </ion-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
 <ion-content scrollY="false">
-
     <ion-card class="scoreboard" top-card>
         <ion-card-content top-content>
             <ion-grid>
-
                 <ion-row>
                     <ion-col>
-
-                        <ion-row *ngFor="let cat of gameService.game?.categories.slice(0, 7)" [ngClass]="{'disabled': cat.name === 'Bonus'}"
-                                 tappable (click)="setSelectedCategory(cat.name)">
+                        <ion-row
+                            *ngFor="let cat of gameService.game?.categories.slice(0, 7)"
+                            [ngClass]="{'disabled': cat.name === 'Bonus'}"
+                            tappable
+                            (click)="setSelectedCategory(cat.name)"
+                        >
                             <ion-col><span class="v-center">{{ cat.name }}</span></ion-col>
-                            <ion-col class="tappable-height"
-                                     [ngClass]="{'unscored': cat.name !== 'Bonus' && (cat.score === undefined || gameService.game?.category === cat.name)}">
+                            <ion-col
+                                class="tappable-height"
+                                [ngClass]="{'unscored': cat.name !== 'Bonus' && (cat.score === undefined || gameService.game?.category === cat.name)}"
+                            >
                                 <span class="v-center">{{ cat.score }}</span>
                             </ion-col>
                         </ion-row>
-
                     </ion-col>
                     <ion-col>
-
-                        <ion-row *ngFor="let cat of gameService.game?.categories.slice(7)"
-                                 tappable (click)="setSelectedCategory(cat.name)">
+                        <ion-row
+                            *ngFor="let cat of gameService.game?.categories.slice(7)"
+                            tappable
+                            (click)="setSelectedCategory(cat.name)"
+                        >
                             <ion-col><span class="v-center">{{ cat.name }}</span></ion-col>
-                            <ion-col class="tappable-height"
-                                     [ngClass]="{'unscored': cat.score === undefined || gameService.game?.category === cat.name}">
+                            <ion-col
+                                class="tappable-height"
+                                [ngClass]="{'unscored': cat.score === undefined || gameService.game?.category === cat.name}"
+                            >
                                 <span class="v-center">{{ cat.score }}</span>
                             </ion-col>
                         </ion-row>
-
                     </ion-col>
                 </ion-row>
 
                 <ion-row>
                     <ion-col>
-
                         <ion-row>
                             <ion-col><span>Subtotal</span></ion-col>
                             <ion-col class="tappable-height"><span>{{ gameService.game?.subtotalLeft }}</span></ion-col>
@@ -54,27 +60,29 @@
                             <ion-col><span>TOTAL</span></ion-col>
                             <ion-col class="tappable-height"><span>{{ gameService.game?.total }}</span></ion-col>
                         </ion-row>
-
                     </ion-col>
                     <ion-col>
-
                         <ion-row>
                             <ion-col><span>Subtotal</span></ion-col>
-                            <ion-col class="tappable-height"><span>{{ gameService.game?.subtotalRight }}</span></ion-col>
+                            <ion-col class="tappable-height"
+                                ><span>{{ gameService.game?.subtotalRight }}</span></ion-col
+                            >
                         </ion-row>
                         <ion-row>
                             <ion-col></ion-col>
                             <ion-col>
                                 <span>
-                                    <ion-button [disabled]="!gameService.game?.category || gameService.game?.rollsLeft === 3"
-                                            class="topz-button" (click)="save()">Save</ion-button>
+                                    <ion-button
+                                        [disabled]="!gameService.game?.category || gameService.game?.rollsLeft === 3"
+                                        class="topz-button"
+                                        (click)="save()"
+                                        >Save</ion-button
+                                    >
                                 </span>
                             </ion-col>
                         </ion-row>
-
                     </ion-col>
                 </ion-row>
-
             </ion-grid>
         </ion-card-content>
     </ion-card>
@@ -91,8 +99,12 @@
 
     <div roll-row>
         <div *ngFor="let roll of [].constructor(gameService.game?.rollsLeft)" roll-icon></div>
-        <ion-button size="medium" [disabled]="!gameService.game?.rollsLeft || !gameService.game?.turnsLeft || !this.unlockedCount"
-                    margin-left (click)="roll()">{{ rollLabel }}</ion-button>
+        <ion-button
+            size="medium"
+            [disabled]="!gameService.game?.rollsLeft || !gameService.game?.turnsLeft || !this.unlockedCount"
+            margin-left
+            (click)="roll()"
+            >{{ rollLabel }}</ion-button
+        >
     </div>
-
 </ion-content>

@@ -1,4 +1,4 @@
-import { Die } from "./die.model";
+import { Die } from './die.model';
 
 export interface Game {
     playing: Boolean;

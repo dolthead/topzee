@@ -5,28 +5,28 @@
 //}
 
 [top-content] * {
-  font-size: 1.9vh;
-  color: black;
+    font-size: 1.9vh;
+    color: black;
 }
 ion-col {
-  padding-bottom: 0;
+    padding-bottom: 0;
 }
 
 ion-img {
-  height: 8vw;
-  width: 8vw;
-  margin-right: 4px;
-  &[locked] {
-    border: 1.5px var(--ion-color-success-shade) solid;
-    border-radius: 10%;
-  }
+    height: 8vw;
+    width: 8vw;
+    margin-right: 4px;
+    &[locked] {
+        border: 1.5px var(--ion-color-success-shade) solid;
+        border-radius: 10%;
+    }
 }
 
 div.dice-row {
-  display: flex;
-  flex-grow: initial;
-  flex-flow: row nowrap;
-  justify-items: flex-start;
-  white-space: nowrap;
-  align-items: center;
+    display: flex;
+    flex-grow: initial;
+    flex-flow: row nowrap;
+    justify-items: flex-start;
+    white-space: nowrap;
+    align-items: center;
 }

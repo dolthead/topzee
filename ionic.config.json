@@ -1,7 +1,7 @@
 {
-  "name": "topzee",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
+    "name": "topzee",
+    "integrations": {
+        "capacitor": {}
+    },
+    "type": "angular"
 }

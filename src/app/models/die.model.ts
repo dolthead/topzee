@@ -1,4 +1,4 @@
 export interface Die {
-  pips: number;
-  locked: boolean;
+    pips: number;
+    locked: boolean;
 }
