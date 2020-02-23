@@ -7,26 +7,20 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, Platform } from '@ionic/angular';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Storage } from '@ionic/storage';
-import { NativeAudio } from '@ionic-native/native-audio/ngx';
 
 describe('HomePage', () => {
     let component: HomePage;
     let fixture: ComponentFixture<HomePage>;
-    let mockStorage, mockNativeAudio;
+    let mockStorage;
 
     beforeEach(async(() => {
         mockStorage = jasmine.createSpyObj(['get', 'set']);
-        mockNativeAudio = jasmine.createSpyObj(['get', 'set']);
 
         TestBed.configureTestingModule({
             declarations: [HomePage],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
             // schemas: [NO_ERRORS_SCHEMA],
-            providers: [
-                { provide: Storage, useValue: mockStorage },
-                Platform,
-                { provide: NativeAudio, useValue: mockNativeAudio },
-            ],
+            providers: [{ provide: Storage, useValue: mockStorage }, Platform],
             imports: [CommonModule, FormsModule, IonicModule, RouterTestingModule],
         }).compileComponents();
     }));
