@@ -3,18 +3,5 @@
     "appName": "topzee",
     "bundledWebRuntime": false,
     "npmClient": "yarn",
-    "webDir": "www",
-    "cordova": {
-        "preferences": {
-            "orientation": "portrait",
-            "ScrollEnabled": "false",
-            "android-minSdkVersion": "19",
-            "BackupWebStorage": "none",
-            "SplashMaintainAspectRatio": "true",
-            "FadeSplashScreenDuration": "300",
-            "SplashShowOnlyFirstTime": "false",
-            "SplashScreenDelay": "2000",
-            "SplashScreen": "screen"
-        }
-    }
+    "webDir": "www"
 }

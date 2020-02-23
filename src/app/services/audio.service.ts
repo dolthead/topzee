@@ -18,7 +18,7 @@ export class AudioService {
 
     constructor(private platform: Platform, private nativeAudio: NativeAudio) {
         platform.ready().then(() => {
-            if (platform.is('cordova')) {
+            if (platform.is('capacitor')) {
                 this.isNative = true;
             }
         });
