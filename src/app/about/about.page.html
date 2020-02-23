@@ -1,6 +1,6 @@
 <ion-header>
     <ion-toolbar color="primary">
-        <ion-title>about</ion-title>
+        <ion-title>About</ion-title>
         <ion-buttons slot="end">
             <ion-button slot="icon-only" (click)="cancel()">
                 <ion-icon name="close"></ion-icon>
@@ -16,18 +16,20 @@
                 <ion-row>
                     <ion-col size="3">Created by</ion-col>
                     <ion-col>
-                        simplybest apps
+                        <p>simplybest apps</p>
+                        <p><a (click)="browseTwitter()">@dolthead</a></p>
                     </ion-col>
                 </ion-row>
                 <ion-row>
                     <ion-col size="3">Credits</ion-col>
                     <ion-col>
-                        <div>
-                            Sounds from opengameart.org, created by: wobbleboxx.com, RPG, Kenney.nl, Bart Kelsey
-                        </div>
-                        <div>
-                            Open source tools: Ionic, Angular, Capacitor, Typescript, rxjs, Jasmine, Karma
-                        </div>
+                        Sounds from opengameart.org, created by: wobbleboxx.com, RPG, Kenney.nl, Bart Kelsey
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="3"></ion-col>
+                    <ion-col>
+                        Open source tools: Ionic 5, Angular 9, Capacitor, Typescript, rxjs, Jasmine, Karma
                     </ion-col>
                 </ion-row>
             </ion-grid>
