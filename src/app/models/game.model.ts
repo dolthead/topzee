@@ -11,4 +11,5 @@ export interface Game {
     subtotalRight: number;
     total: number;
     extraOak5Count: number;
+    newBonus: Boolean;
 }

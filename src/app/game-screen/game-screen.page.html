@@ -29,7 +29,9 @@
                                 class="tappable-height"
                                 [ngClass]="{'unscored': cat.name !== 'Bonus' && (cat.score === undefined || gameService.game?.category === cat.name)}"
                             >
-                                <span class="v-center">{{ cat.score }}</span>
+                                <span class="v-center" [ngClass]="{'bonus': cat.name === 'Bonus'}"
+                                    >{{ cat.score }}</span
+                                >
                             </ion-col>
                         </ion-row>
                     </ion-col>
@@ -44,7 +46,9 @@
                                 class="tappable-height"
                                 [ngClass]="{'unscored': cat.score === undefined || gameService.game?.category === cat.name}"
                             >
-                                <span class="v-center">{{ cat.score }}</span>
+                                <span class="v-center" [ngClass]="{'bonus': cat.name === '5 Oak'}"
+                                    >{{ cat.score }}</span
+                                >
                             </ion-col>
                         </ion-row>
                     </ion-col>
@@ -58,7 +62,9 @@
                         </ion-row>
                         <ion-row>
                             <ion-col><span>TOTAL</span></ion-col>
-                            <ion-col class="tappable-height"><span>{{ gameService.game?.total }}</span></ion-col>
+                            <ion-col class="tappable-height">
+                                <span class="bonus">{{ gameService.game?.total }}</span>
+                            </ion-col>
                         </ion-row>
                     </ion-col>
                     <ion-col>

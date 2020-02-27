@@ -78,6 +78,8 @@ export class GameScreenPage {
                             this.gameService.storeGame();
                             if (this.scoringService.getOAKScore(this.gameService.game.dice, 5)) {
                                 this.audio.play('oak5');
+                                setTimeout(() => this.audio.play('oak5'), 400);
+                                setTimeout(() => this.audio.play('oak5'), 800);
                                 // this.vibration.vibrate(500);
                             }
                         }, 10);
@@ -139,6 +141,10 @@ export class GameScreenPage {
     async save() {
         this.audio.play('score');
         await this.gameService.save();
+        if (this.gameService.game.newBonus) {
+            this.audio.play('oak5');
+            this.gameService.game.newBonus = false;
+        }
         if (!this.gameService.game || !this.gameService.game.turnsLeft) {
             await this.gameOver();
         }

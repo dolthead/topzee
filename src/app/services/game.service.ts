@@ -58,6 +58,7 @@ export class GameService {
             subtotalRight: 0,
             total: 0,
             extraOak5Count: 0,
+            newBonus: false,
         };
     }
 
@@ -114,6 +115,7 @@ export class GameService {
         if (this.game.subtotalLeft >= this.scoringService.MIN_FOR_BONUS) {
             bonus.score = this.scoringService.BONUS;
             this.game.subtotalLeft += this.scoringService.BONUS;
+            this.game.newBonus = true;
         }
 
         this.game.subtotalRight = this.game.categories.slice(7).reduce((total, cat) => total + (cat.score || 0), 0);
