@@ -40,3 +40,4 @@ resources/android/
 localnotes.txt
 *.pdf
 src/app/firebaseConfig.ts
+.scannerwork/
