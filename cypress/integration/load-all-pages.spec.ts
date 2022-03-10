@@ -6,7 +6,7 @@ const pageList = [
     },
     { 
         pageTitle: 'Topzee', url: '/GameScreen',
-        elements: ['ion-img', 'ion-button' ],
+        elements: ['ion-button', 'ion-icon[name=help-circle-outline]' ],
     },
 ];
 
